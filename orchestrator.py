@@ -29,15 +29,20 @@ class FitAnalysis(BaseModel):
     fit_score: int = Field(description="Puntuación de compatibilidad de 0 a 100")
     recommendation: str = Field(description="'APPLY_PRIORITY', 'APPLY_STANDARD', o 'SKIP'")
     profile_track: str = Field(description="Track detectado: 'AI_ENGINEERING', 'CLOUD_DEVOPS', o 'HARDWARE_EMBEDDED'")
+    language_fit: str = Field(description="Evaluación de idioma: 'IDEAL_LATAM_SPANISH', 'TECHNICAL_ENGLISH_B2_OK', o 'RISK_C1_NATIVE_DEMANDED'")
     matching_skills: List[str] = Field(description="Habilidades del candidato que coinciden directamente")
     missing_skills: List[str] = Field(description="Requerimientos que faltan o requieren explicación")
     key_talking_points: List[str] = Field(description="Puntos fuertes de Santiago a destacar en la postulación")
     suggested_angle: str = Field(description="Enfoque estratégico para la postulación")
 
+class ProjectItem(BaseModel):
+    name: str = Field(description="Nombre del proyecto técnico relevante")
+    description: str = Field(description="Descripción del impacto, solución y stack tecnológico aplicado")
+
 class TailoredApplication(BaseModel):
     cv_summary: str = Field(description="Resumen profesional adaptado a la vacante (3-4 líneas)")
     tailored_experience: List[str] = Field(description="Viñetas STAR con métricas enfocadas en el rol")
-    tailored_projects: List[Dict[str, str]] = Field(description="Proyectos más relevantes con stack ajustado")
+    tailored_projects: List[ProjectItem] = Field(description="Proyectos más relevantes con stack ajustado")
     cover_letter: str = Field(description="Carta de presentación persuasiva y técnica en el idioma de la vacante")
 
 def get_candidate_profile() -> str:
@@ -66,10 +71,19 @@ class Orchestrator:
 
             prompt = f"""
             Eres el 'Talent Matchmaker Agent' para Santiago Alejandro Ochoa Quesada.
-            Santiago está abierto y calificado para tres verticales principales:
-            1. AI Engineering (Machine Learning, Computer Vision, Signal DSP, MLOps, PyTorch).
-            2. Cloud & Systems Engineering (AWS, Linux, Docker, CI/CD, Data Pipelines, QA).
-            3. Hardware & Embedded Engineering (ESP32, C/C++, Sensores, Telemetría, Circuitos).
+            Santiago está abierto y altamente calificado para tres verticales principales:
+            1. AI Engineering (Machine Learning, Computer Vision, Signal DSP / FFT, MLOps, PyTorch, Python).
+            2. Cloud & Systems Engineering (AWS, Linux, Docker, CI/CD GitHub Actions, Data Pipelines ETL, QA Pytest).
+            3. Hardware & Embedded Engineering (ESP32, C/C++, Sensores I2C/SPI, Telemetría, Firmware).
+
+            --- REGLA CRÍTICA DE IDIOMA Y PRIORIZACIÓN (INGLÉS B2) ---
+            Santiago domina el inglés técnico escrito y conversación funcional (B2).
+            - DA MÁXIMA PRIORIDAD (recommendation: 'APPLY_PRIORITY') a:
+              * Vacantes remotas dirigidas a Latinoamérica o con base en España/LatAm.
+              * Equipos internacionales donde el trabajo diario sea en inglés técnico/escrito estándar (B2 funcional).
+              * Vacantes que no exijan explícitamente fluidez nativa o C1.
+            - IDENTIFICA 'RISK_C1_NATIVE_DEMANDED':
+              * Si la vacante exige taxativamente "Native English Speaker", "C1 fluency mandatory", o es un rol con alto componente de llamadas ejecutivas comerciales/ventas en inglés con clientes US/UK. En tales casos reduce el fit_score y marca recommendation como 'APPLY_STANDARD' o 'SKIP'.
 
             --- PERFIL DEL CANDIDATO ---
             {profile}
@@ -80,7 +94,7 @@ class Orchestrator:
             Descripción:
             {job_description}
 
-            Evalúa la vacante, identifica el track dominante y calcula el fit score.
+            Evalúa la vacante, identifica el track dominante, evalúa el fit de idioma y calcula el fit score exacto (0-100).
             """
             response = client.models.generate_content(
                 model="gemini-3.5-flash-lite",
@@ -106,6 +120,11 @@ class Orchestrator:
             prompt = f"""
             Eres un 'ATS Resume & Cover Letter Tailor' de clase mundial para Santiago Alejandro Ochoa Quesada.
             Tu misión es generar una postulación adaptada, persuasiva y técnica orientada a superar filtros ATS y convencer al Hiring Manager.
+
+            --- REGLA DE ESTILO CRÍTICA ---
+            - El tono debe ser altamente profesional, riguroso y técnico.
+            - NUNCA menciones nivel de idiomas ni limitaciones lingüísticas en el CV ni en la carta.
+            - Si la vacante está en inglés, redacta todo en inglés técnico impecable, fluido y natural. Si está en español, en español formal de ingeniería.
 
             --- PERFIL DEL CANDIDATO ---
             {profile}

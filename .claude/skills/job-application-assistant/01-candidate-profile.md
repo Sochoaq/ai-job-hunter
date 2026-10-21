@@ -13,22 +13,24 @@ education:
   period: "02/2021 — 11/2025"
   gpa: "4.6 / 5.0"
 target_roles:
-  - "AI Engineer"
-  - "AI Project Engineer"
-  - "Machine Learning Engineer"
-  - "Data / MLOps Engineer"
+  - "AI Engineer / Machine Learning Engineer"
+  - "Cloud, Systems & DevOps Engineer"
+  - "Hardware, Embedded Systems & Firmware Engineer"
 languages:
   - language: "Español"
     level: "Nativo"
   - language: "Inglés"
-    level: "B2 (Profesional)"
+    level: "B2 (Profesional de trabajo / Técnico)"
   - language: "Francés"
     level: "A2"
 ---
 
 # Perfil del Candidato: Santiago Alejandro Ochoa Quesada
 
-Ingeniero Electrónico de la Universidad Nacional de Colombia (promedio 4.6/5.0) enfocado en **AI Engineering**, desarrollo de software, pipelines de datos y sistemas inteligentes.
+Ingeniero Electrónico de la Universidad Nacional de Colombia (promedio 4.6/5.0) enfocado en tres áreas de alto impacto:
+1. **AI Engineering & Computer Vision:** Machine Learning, Computer Vision, DSP de series temporales (FFT), PyTorch.
+2. **Cloud, DevOps & Data Systems:** Docker, AWS (EC2, S3, IAM), CI/CD con GitHub Actions, pipelines ETL y QA.
+3. **Hardware & Embedded Systems:** C/C++, microcontroladores (ESP32, ARM), telemetría industrial, protocolos seriales (I2C, SPI, UART).
 
 ## Experiencia Profesional
 
