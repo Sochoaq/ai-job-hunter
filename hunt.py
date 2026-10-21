@@ -172,23 +172,100 @@ def menu_tracker():
             job_tracker.update_status(app_id, st_map[st_choice])
             print(f"[OK] Estado de aplicación #{app_id} actualizado a {st_map[st_choice]}.")
 
+def menu_batch(orch: Orchestrator):
+    print("\n[4] MODO AUTOPILOTO EN LOTE (BATCH APPLICATION BUILDER)")
+    print("Este modo analiza automáticamente las mejores ofertas remotas, evalúa tu compatibilidad")
+    print("y genera los CVs en PDF y cartas de las vacantes que superen el score mínimo y respeten el fit B2.")
+
+    threshold_str = input("\nPuntuación mínima de match para generar postulación (predeterminado 75): ").strip()
+    threshold = int(threshold_str) if threshold_str.isdigit() else 75
+
+    limit_str = input("¿Cuántas vacantes remotas deseas explorar y procesar? (predeterminado 10): ").strip()
+    limit = int(limit_str) if limit_str.isdigit() else 10
+
+    jobs = job_scout.find_jobs(max_results=limit)
+    if not jobs:
+        print("[!] No se encontraron vacantes para procesar.")
+        return
+
+    print(f"\n[*] Iniciando análisis en lote de {len(jobs)} ofertas...")
+    generated_count = 0
+
+    for idx, j in enumerate(jobs, 1):
+        print(f"\n[{idx}/{len(jobs)}] Evaluando: {j['title']} @ {j['company']} ({j['location']})...")
+        eval_result = orch.evaluate_job(j['title'], j['company'], j['description'])
+
+        if "error" in eval_result:
+            print(f"    [!] Error al evaluar: {eval_result['error']}")
+            continue
+
+        fit_score = eval_result.get("fit_score", 0)
+        track = eval_result.get("profile_track", "N/A")
+        lang_fit = eval_result.get("language_fit", "N/A")
+
+        print(f"    -> Score: {fit_score}/100 | Track: {track} | Idioma: {lang_fit}")
+
+        if fit_score < threshold:
+            print(f"    [-] Omitida (score {fit_score} menor a umbral {threshold})")
+            continue
+
+        if lang_fit == "RISK_C1_NATIVE_DEMANDED":
+            print(f"    [-] Omitida por idioma (exige inglés C1/Nativo excluyente)")
+            continue
+
+        print(f"    [+] ¡Match alto detectado! Adaptando CV y redactando carta...")
+        tailor_result = orch.tailor_application(j['title'], j['company'], j['description'], eval_result)
+
+        if "error" in tailor_result:
+            print(f"    [!] Error al redactar: {tailor_result['error']}")
+            continue
+
+        safe_company = "".join(c for c in j['company'] if c.isalnum() or c in (" ", "_", "-")).strip().replace(" ", "_")
+        output_dir = os.path.join(os.path.dirname(__file__), "output")
+        os.makedirs(output_dir, exist_ok=True)
+        pdf_path = os.path.join(output_dir, f"CV_Santiago_Ochoa_{safe_company}.pdf")
+        cl_path = os.path.join(output_dir, f"Cover_Letter_{safe_company}.txt")
+
+        build_pdf(CANDIDATE_HEADER, tailor_result, pdf_path)
+        with open(cl_path, "w", encoding="utf-8") as f:
+            f.write(tailor_result.get("cover_letter", ""))
+
+        app_id = job_tracker.add_application(
+            company=j['company'],
+            position=j['title'],
+            track=track,
+            fit_score=fit_score,
+            url=j['url'],
+            notes=f"Auto-batch. Idioma: {lang_fit}. URL: {j['url']}"
+        )
+        print(f"    [OK] PDF generado: {pdf_path}")
+        print(f"    [OK] Registrado en DB Tracker con ID #{app_id}")
+        generated_count += 1
+
+    print(f"\n=======================================================")
+    print(f"[OK] Proceso en lote finalizado: {generated_count} aplicaciones listas en carpeta 'output/'")
+    print(f"=======================================================")
+
 def main():
     orch = Orchestrator()
     while True:
         print_banner()
-        print("1. Buscar y evaluar vacantes remotas (RemoteOK + Arbeitnow)")
+        print("1. Buscar y evaluar vacantes remotas individuales (RemoteOK + Arbeitnow)")
         print("2. Pegar y postular a vacante personalizada (LinkedIn, Torre, etc.)")
-        print("3. Ver y gestionar seguimiento de postulaciones (job_tracker.db)")
-        print("4. Salir")
+        print("3. Modo Autopiloto en lote (evaluar y generar PDFs para varios en automático)")
+        print("4. Ver y gestionar seguimiento de postulaciones (job_tracker.db)")
+        print("5. Salir")
         
-        choice = input("\nSelecciona una opción (1-4): ").strip()
+        choice = input("\nSelecciona una opción (1-5): ").strip()
         if choice == "1":
             menu_scout(orch)
         elif choice == "2":
             menu_custom(orch)
         elif choice == "3":
-            menu_tracker()
+            menu_batch(orch)
         elif choice == "4":
+            menu_tracker()
+        elif choice == "5":
             print("\n¡Éxitos en tu búsqueda de empleo! Hasta pronto.")
             break
         else:
