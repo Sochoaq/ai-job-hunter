@@ -25,7 +25,8 @@ TRACK_PATTERNS = {
         r"\b(ci/cd|github actions|gitlab ci)\b",
         r"\b(backend developer|backend engineer)\b",
         r"\b(python developer|python engineer)\b",
-        r"\b(linux sysadmin|infrastructure)\b"
+        r"\b(linux sysadmin|infrastructure)\b",
+        r"\b(ciberseguridad|cybersecurity|security engineer)\b"
     ],
     "HARDWARE_EMBEDDED": [
         r"\b(embedded systems?|embedded software|firmware)\b",
@@ -33,7 +34,9 @@ TRACK_PATTERNS = {
         r"\b(iot|internet of things|telemetry)\b",
         r"\b(hardware engineer|circuit design|pcb)\b",
         r"\b(c\+\+ developer|c/c\+\+)\b",
-        r"\b(fpga|verilog|vhdl)\b"
+        r"\b(fpga|verilog|vhdl)\b",
+        r"\b(plc|automatizaci[oó]n|scada|control industrial)\b",
+        r"\b(instrumentaci[oó]n|field engineer|ingeniero de proyectos)\b"
     ]
 }
 
@@ -60,7 +63,6 @@ def is_disqualified(text: str) -> bool:
 
 def detect_track(title: str, tags: List[str], desc: str) -> str:
     """Determina qué track coincide con mayor peso en el título y tags."""
-    # El título y tags tienen mucho mayor peso que la descripción larga
     weighted_text = f"{title} {title} {' '.join(tags)} {' '.join(tags)} {desc[:400]}".lower()
     scores = {track: 0 for track in TRACK_PATTERNS}
     for track, patterns in TRACK_PATTERNS.items():
@@ -70,7 +72,92 @@ def detect_track(title: str, tags: List[str], desc: str) -> str:
     best_track = max(scores, key=scores.get)
     if scores[best_track] > 0:
         return best_track
+    return "HARDWARE_EMBEDDED" if any(w in weighted_text for w in ["proyecto", "automatizacion", "control"]) else "AI_ENGINEERING"
+
+def scout_linkedin_jobs(query: str, location: str = "Bogota, Colombia", limit: int = 10) -> List[Dict[str, Any]]:
+    """Consulta la API pública guest de LinkedIn para Colombia/Bogotá."""
+    jobs = []
+    try:
+        url = f"https://www.linkedin.com/jobs-guest/jobs/api/seeMoreJobPostings/search?keywords={query.replace(' ', '+')}&location={location.replace(' ', '+')}&start=0"
+        headers = {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+            "Accept-Language": "es-ES,es;q=0.9,en;q=0.8"
+        }
+        res = requests.get(url, headers=headers, timeout=12)
+        if res.status_code == 200:
+            titles = re.findall(r'<h3[^>]*base-search-card__title[^>]*>(.*?)</h3>', res.text, re.DOTALL)
+            companies = re.findall(r'<h4[^>]*base-search-card__subtitle[^>]*>(.*?)</h4>', res.text, re.DOTALL)
+            links = re.findall(r'<a[^>]*class="base-card__full-link[^"]*"[^>]*href="([^"]+)"', res.text)
+            locs = re.findall(r'<span[^>]*class="job-search-card__location"[^>]*>(.*?)</span>', res.text, re.DOTALL)
+
+            for i in range(min(len(titles), len(companies))):
+                t = clean_html(titles[i])
+                c = clean_html(companies[i])
+                l = links[i].split("?")[0] if i < len(links) else ""
+                loc = clean_html(locs[i]) if i < len(locs) else location
+
+                # Extraer Job ID de LinkedIn para posible detalle
+                job_id_match = re.search(r'-(\d+)$', l)
+                job_id = job_id_match.group(1) if job_id_match else ""
+
+                track = detect_track(t, [c], "")
+                jobs.append({
+                    "source": "LinkedIn (Multinacional)",
+                    "title": t,
+                    "company": c,
+                    "url": l,
+                    "job_id": job_id,
+                    "location": loc,
+                    "track_hint": track,
+                    "description": f"Vacante de {t} en la multinacional {c} ({loc}). Enlace de postulación directa: {l}"
+                })
+                if len(jobs) >= limit:
+                    break
+    except Exception as e:
+        print(f"[!] Error consultando LinkedIn para '{query}': {e}")
+    return jobs
+
+def fetch_linkedin_job_detail(job_id: str) -> str:
+    """Obtiene la descripción completa de una vacante de LinkedIn."""
+    if not job_id:
+        return ""
+    try:
+        url = f"https://www.linkedin.com/jobs-guest/jobs/api/jobPosting/{job_id}"
+        headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"}
+        res = requests.get(url, headers=headers, timeout=10)
+        if res.status_code == 200:
+            return clean_html(res.text)
+    except Exception:
+        pass
     return ""
+
+def scout_multinationals(location: str = "Bogota, Colombia", limit_per_cluster: int = 5) -> List[Dict[str, Any]]:
+    """
+    Busca vacantes en multinacionales líderes en Colombia y Latinoamérica
+    alineadas con los 3 perfiles técnicos de Santiago.
+    """
+    print(f"[*] Rastreador de Multinacionales activo para: {location}...")
+    clusters = [
+        "Siemens OR Schneider OR ABB OR GEA OR Tetra Pak",
+        "Mastercard OR Unisys OR Inetum OR IBM OR Cisco Ciberseguridad",
+        "Mercado Libre OR Globant OR Oracle Cloud",
+        "Ingeniero de Proyectos Industriales CAPEX Automatizacion",
+        "Quala OR Bavaria OR CasaLuker Proyectos"
+    ]
+
+    all_jobs = []
+    seen_urls = set()
+
+    for q in clusters:
+        cluster_jobs = scout_linkedin_jobs(q, location=location, limit=limit_per_cluster)
+        for j in cluster_jobs:
+            if j["url"] and j["url"] not in seen_urls:
+                seen_urls.add(j["url"])
+                all_jobs.append(j)
+
+    print(f"[OK] Se encontraron {len(all_jobs)} ofertas vigentes de multinacionales.")
+    return all_jobs
 
 def scout_remoteok(limit: int = 30) -> List[Dict[str, Any]]:
     """Obtiene vacantes tecnológicas remotas desde RemoteOK."""
@@ -163,6 +250,6 @@ def find_jobs(max_results: int = 20) -> List[Dict[str, Any]]:
     return all_jobs
 
 if __name__ == "__main__":
-    results = find_jobs(max_results=6)
+    results = scout_multinationals(limit_per_cluster=2)
     for i, j in enumerate(results, 1):
         print(f"{i}. [{j['track_hint']}] {j['title']} @ {j['company']} ({j['location']})")

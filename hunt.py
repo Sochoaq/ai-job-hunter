@@ -246,26 +246,68 @@ def menu_batch(orch: Orchestrator):
     print(f"[OK] Proceso en lote finalizado: {generated_count} aplicaciones listas en carpeta 'output/'")
     print(f"=======================================================")
 
+def menu_multinationals(orch: Orchestrator):
+    print("\n[1] Explorando vacantes en Multinacionales líderes en Colombia y LatAm...")
+    loc = input("Ingresa ubicación de búsqueda (presiona Enter para 'Bogota, Colombia'): ").strip()
+    if not loc:
+        loc = "Bogota, Colombia"
+
+    jobs = job_scout.scout_multinationals(location=loc, limit_per_cluster=3)
+    if not jobs:
+        print("[!] No se encontraron ofertas de multinacionales en este momento.")
+        return
+
+    print("\n" + "=" * 75)
+    print("OFERTAS ACTIVAS DE MULTINACIONALES ENCONTRADAS:")
+    print("=" * 75)
+    for idx, j in enumerate(jobs, 1):
+        print(f" {idx:2d}. [{j['track_hint'][:16]:<16}] {j['company'][:22]:<22} | {j['title'][:32]}")
+
+    sel = input("\nIngresa el número de la oferta que deseas evaluar (o Enter para volver): ").strip()
+    if not sel.isdigit() or int(sel) < 1 or int(sel) > len(jobs):
+        return
+
+    job = jobs[int(sel) - 1]
+    
+    # Intentar obtener la descripción completa si tiene ID
+    full_desc = job["description"]
+    if job.get("job_id"):
+        print(f"[*] Obteniendo detalles completos de LinkedIn para {job['title']}...")
+        detail = job_scout.fetch_linkedin_job_detail(job["job_id"])
+        if detail and len(detail) > 100:
+            full_desc = detail
+
+    process_and_save_application(
+        orch,
+        company=job["company"],
+        position=job["title"],
+        desc=full_desc,
+        url=job["url"]
+    )
+
 def main():
     orch = Orchestrator()
     while True:
         print_banner()
-        print("1. Buscar y evaluar vacantes remotas individuales (RemoteOK + Arbeitnow)")
-        print("2. Pegar y postular a vacante personalizada (LinkedIn, Torre, etc.)")
-        print("3. Modo Autopiloto en lote (evaluar y generar PDFs para varios en automático)")
-        print("4. Ver y gestionar seguimiento de postulaciones (job_tracker.db)")
-        print("5. Salir")
+        print("1. Buscar vacantes en Multinacionales (ABB, Siemens, Schneider, IBM, Oracle, Quala...)")
+        print("2. Buscar vacantes remotas abiertas globales (RemoteOK + Arbeitnow)")
+        print("3. Pegar y postular a vacante personalizada (LinkedIn, Torre, Computrabajo, etc.)")
+        print("4. Modo Autopiloto en lote (evaluar y generar PDFs para varios en automático)")
+        print("5. Ver y gestionar seguimiento de postulaciones (job_tracker.db)")
+        print("6. Salir")
         
-        choice = input("\nSelecciona una opción (1-5): ").strip()
+        choice = input("\nSelecciona una opción (1-6): ").strip()
         if choice == "1":
-            menu_scout(orch)
+            menu_multinationals(orch)
         elif choice == "2":
-            menu_custom(orch)
+            menu_scout(orch)
         elif choice == "3":
-            menu_batch(orch)
+            menu_custom(orch)
         elif choice == "4":
-            menu_tracker()
+            menu_batch(orch)
         elif choice == "5":
+            menu_tracker()
+        elif choice == "6":
             print("\n¡Éxitos en tu búsqueda de empleo! Hasta pronto.")
             break
         else:
