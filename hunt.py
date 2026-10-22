@@ -143,47 +143,125 @@ def menu_custom(orch: Orchestrator):
     process_and_save_application(orch, company, position, desc, url)
 
 def menu_tracker():
-    print("\n[3] SEGUIMIENTO DE POSTULACIONES (job_tracker.db)")
+    print("\n" + "=" * 80)
+    print("SEGUIMIENTO DE POSTULACIONES (SQLite: job_tracker.db)")
+    print("=" * 80)
     apps = job_tracker.list_applications()
     if not apps:
         print("Aún no tienes aplicaciones registradas en la base de datos.")
         return
 
-    print("-" * 80)
-    print(f"{'ID':<4} | {'EMPRESA':<20} | {'CARGO':<25} | {'TRACK':<15} | {'FIT':<4} | {'ESTADO'}")
-    print("-" * 80)
+    print(f"{'ID':<4} | {'EMPRESA':<20} | {'CARGO':<25} | {'TRACK':<14} | {'FIT':<4} | {'ESTADO':<14} | {'FECHA'}")
+    print("-" * 95)
     for a in apps:
-        print(f"{a['id']:<4} | {a['company'][:20]:<20} | {a['position'][:25]:<25} | {a['track'][:15]:<15} | {a['fit_score']:<4} | {a['status']}")
-    print("-" * 80)
+        f_date = a.get('date_added', '')[:10] if a.get('date_added') else ''
+        print(f"{a['id']:<4} | {a['company'][:20]:<20} | {a['position'][:25]:<25} | {a['track'][:14]:<14} | {a['fit_score']:<4} | {a['status']:<14} | {f_date}")
+    print("-" * 95)
 
-    sub = input("\n¿Deseas actualizar el estado de alguna postulación? (ID para editar / Enter para salir): ").strip()
-    if sub.isdigit():
-        app_id = int(sub)
-        print("Estados: 1. PENDING_REVIEW | 2. APPLIED | 3. INTERVIEW | 4. REJECTED | 5. OFFER")
-        st_choice = input("Selecciona nuevo estado (1-5): ").strip()
-        st_map = {
-            "1": "PENDING_REVIEW",
-            "2": "APPLIED",
-            "3": "INTERVIEW",
-            "4": "REJECTED",
-            "5": "OFFER"
-        }
-        if st_choice in st_map:
-            job_tracker.update_status(app_id, st_map[st_choice])
-            print(f"[OK] Estado de aplicación #{app_id} actualizado a {st_map[st_choice]}.")
+    print("\nAcciones rápidas:")
+    print(" - Escribe el [ID] de una postulación para ver detalles, abrir su PDF o actualizar estado.")
+    print(" - Escribe [A] para abrir la carpeta 'output/' en el Explorador de Windows.")
+    print(" - Escribe [D] para abrir el archivo 'job_tracker.db'.")
+    print(" - Presiona [Enter] para volver al menú principal.")
+
+    action = input("\nSelecciona una opción: ").strip().upper()
+    if action == "A":
+        output_dir = os.path.join(os.path.dirname(__file__), "output")
+        try:
+            os.startfile(output_dir)
+            print(f"[OK] Carpeta 'output/' abierta en el Explorador de Windows.")
+        except Exception as e:
+            print(f"[!] No se pudo abrir la carpeta: {e}")
+    elif action == "D":
+        try:
+            os.startfile(job_tracker.DB_PATH)
+            print(f"[OK] Archivo 'job_tracker.db' abierto.")
+        except Exception as e:
+            print(f"[!] Archivo job_tracker.db está en: {job_tracker.DB_PATH}")
+    elif action.isdigit():
+        app_id = int(action)
+        app = next((x for x in apps if x["id"] == app_id), None)
+        if not app:
+            print(f"[!] Postulación con ID #{app_id} no encontrada.")
+            return
+
+        print("\n" + "-" * 60)
+        print(f"DETALLE DE POSTULACIÓN #{app['id']}")
+        print(f"Empresa:     {app['company']}")
+        print(f"Cargo:       {app['position']}")
+        print(f"Track:       {app['track']}")
+        print(f"Fit Score:   {app['fit_score']}/100")
+        print(f"Estado:      {app['status']}")
+        print(f"URL:         {app.get('url', 'N/A')}")
+        print(f"Notas:       {app.get('notes', 'N/A')}")
+        print("-" * 60)
+
+        print("\n¿Qué deseas hacer?")
+        print("1. Cambiar estado (PENDING_REVIEW, APPLIED, INTERVIEW, REJECTED, OFFER)")
+        print("2. Abrir enlace de postulación en el navegador")
+        print("3. Abrir PDF de la CV")
+        print("4. Volver")
+        sub_act = input("Selecciona (1-4): ").strip()
+
+        if sub_act == "1":
+            print("\nEstados: 1. PENDING_REVIEW | 2. APPLIED | 3. INTERVIEW | 4. REJECTED | 5. OFFER")
+            st_choice = input("Selecciona nuevo estado (1-5): ").strip()
+            st_map = {
+                "1": "PENDING_REVIEW",
+                "2": "APPLIED",
+                "3": "INTERVIEW",
+                "4": "REJECTED",
+                "5": "OFFER"
+            }
+            if st_choice in st_map:
+                job_tracker.update_status(app_id, st_map[st_choice])
+                print(f"[OK] Estado de aplicación #{app_id} actualizado a {st_map[st_choice]}.")
+        elif sub_act == "2" and app.get("url"):
+            try:
+                import webbrowser
+                webbrowser.open(app["url"])
+                print(f"[OK] Abriendo {app['url']} en tu navegador...")
+            except Exception as e:
+                print(f"[!] Error abriendo navegador: {e}")
+        elif sub_act == "3":
+            safe_c = "".join(c for c in app["company"] if c.isalnum() or c in (" ", "_", "-")).strip().replace(" ", "_")
+            pdf_path = os.path.join(os.path.dirname(__file__), "output", f"CV_Santiago_Ochoa_{safe_c}.pdf")
+            if not os.path.exists(pdf_path):
+                # Buscar cualquier PDF de esa empresa
+                output_dir = os.path.join(os.path.dirname(__file__), "output")
+                candidates = [os.path.join(output_dir, f) for f in os.listdir(output_dir) if safe_c.lower() in f.lower() and f.endswith(".pdf")]
+                pdf_path = candidates[0] if candidates else pdf_path
+
+            if os.path.exists(pdf_path):
+                try:
+                    os.startfile(pdf_path)
+                    print(f"[OK] Abriendo PDF: {pdf_path}")
+                except Exception as e:
+                    print(f"[!] Error abriendo PDF: {e}")
+            else:
+                print(f"[!] No se encontró el archivo PDF en {pdf_path}")
 
 def menu_batch(orch: Orchestrator):
     print("\n[4] MODO AUTOPILOTO EN LOTE (BATCH APPLICATION BUILDER)")
-    print("Este modo analiza automáticamente las mejores ofertas remotas, evalúa tu compatibilidad")
+    print("Este modo analiza automáticamente las mejores ofertas, evalúa tu compatibilidad")
     print("y genera los CVs en PDF y cartas de las vacantes que superen el score mínimo y respeten el fit B2.")
+
+    print("\n¿Qué fuente de vacantes deseas explorar en lote?")
+    print("1. Multinacionales en Colombia/LatAm (ABB, Siemens, Schneider, IBM, Oracle, Quala...) [Recomendado]")
+    print("2. Vacantes remotas globales abiertas (RemoteOK + Arbeitnow)")
+    src_choice = input("Selecciona fuente (1 o 2, predeterminado 1): ").strip()
 
     threshold_str = input("\nPuntuación mínima de match para generar postulación (predeterminado 75): ").strip()
     threshold = int(threshold_str) if threshold_str.isdigit() else 75
 
-    limit_str = input("¿Cuántas vacantes remotas deseas explorar y procesar? (predeterminado 10): ").strip()
-    limit = int(limit_str) if limit_str.isdigit() else 10
+    limit_str = input("¿Cuántas vacantes deseas explorar y evaluar? (predeterminado 8): ").strip()
+    limit = int(limit_str) if limit_str.isdigit() else 8
 
-    jobs = job_scout.find_jobs(max_results=limit)
+    if src_choice == "2":
+        jobs = job_scout.find_jobs(max_results=limit)
+    else:
+        jobs = job_scout.scout_multinationals(location="Bogota, Colombia", limit_per_cluster=max(2, limit // 4))
+
     if not jobs:
         print("[!] No se encontraron vacantes para procesar.")
         return
@@ -193,7 +271,15 @@ def menu_batch(orch: Orchestrator):
 
     for idx, j in enumerate(jobs, 1):
         print(f"\n[{idx}/{len(jobs)}] Evaluando: {j['title']} @ {j['company']} ({j['location']})...")
-        eval_result = orch.evaluate_job(j['title'], j['company'], j['description'])
+        
+        # Obtener detalle completo de LinkedIn si está disponible
+        desc_text = j["description"]
+        if j.get("job_id"):
+            d = job_scout.fetch_linkedin_job_detail(j["job_id"])
+            if d and len(d) > 100:
+                desc_text = d
+
+        eval_result = orch.evaluate_job(j['title'], j['company'], desc_text)
 
         if "error" in eval_result:
             print(f"    [!] Error al evaluar: {eval_result['error']}")
@@ -214,7 +300,7 @@ def menu_batch(orch: Orchestrator):
             continue
 
         print(f"    [+] ¡Match alto detectado! Adaptando CV y redactando carta...")
-        tailor_result = orch.tailor_application(j['title'], j['company'], j['description'], eval_result)
+        tailor_result = orch.tailor_application(j['title'], j['company'], desc_text, eval_result)
 
         if "error" in tailor_result:
             print(f"    [!] Error al redactar: {tailor_result['error']}")
@@ -245,6 +331,10 @@ def menu_batch(orch: Orchestrator):
     print(f"\n=======================================================")
     print(f"[OK] Proceso en lote finalizado: {generated_count} aplicaciones listas en carpeta 'output/'")
     print(f"=======================================================")
+
+    # Abre automáticamente el SQLite Tracker y la vista de aplicaciones
+    print("\n[*] Abriendo automáticamente el seguimiento en SQLite (job_tracker.db)...")
+    menu_tracker()
 
 def menu_multinationals(orch: Orchestrator):
     print("\n[1] Explorando vacantes en Multinacionales líderes en Colombia y LatAm...")
