@@ -121,7 +121,7 @@ def generate_latex_timeline_source(candidate_info: Dict[str, Any], application_d
 \\hypersetup{{colorlinks=true, linkcolor=accentblue, urlcolor=accentblue}}
 
 \\titleformat{{\\section}}{{\\large\\bfseries\\color{{accent}}}}{{}}{{0em}}{{}}[\\vspace{{1pt}}\\titlerule]
-\\titlespacing{{\\section}}{{0pt}}{{8pt}}{{6pt}}
+\\titlespacing{{\\section}}{{0pt}}{{11pt}}{{7pt}}
 
 \\newtcbox{{\\skillbadge}}{{
     on line, box align=base,
@@ -141,7 +141,7 @@ def generate_latex_timeline_source(candidate_info: Dict[str, Any], application_d
     top=0pt,
     bottom=0pt,
     before skip=0.8ex,
-    after skip=2ex
+    after skip=2.6ex
 }}
 
 \\newcommand{{\\cventry}}[5]{{%
@@ -205,12 +205,6 @@ def generate_latex_timeline_source(candidate_info: Dict[str, Any], application_d
     \\item Elaboración de guías, reportes y presentaciones técnicas para documentar procedimientos, fallas, hallazgos y aprendizajes de manera estructurada.
 }}
 
-\\newpage
-
-\\section{{Proyectos Relevantes}}
-
-{projects_latex}
-
 \\section{{Educación}}
 
 \\cventry{{Ingeniería Electrónica}}{{Universidad Nacional de Colombia}}{{Bogotá}}{{02/2021 - 11/2025}}
@@ -220,10 +214,16 @@ def generate_latex_timeline_source(candidate_info: Dict[str, Any], application_d
     \\item Desarrollo de proyectos enfocados en simulación de procesos, programación de hardware, validación experimental y elaboración de reportes técnicos de ingeniería.
 }}
 
+\\newpage
+
+\\section{{Proyectos Relevantes}}
+
+{projects_latex}
+
 \\section{{Habilidades}}
-\\begin{{tcolorbox}}[colback=lightgray, colframe=lightgray, boxrule=0pt, arc=6pt, left=8pt, right=8pt, top=8pt, bottom=8pt]
+\\begin{{tcolorbox}}[colback=lightgray, colframe=lightgray, boxrule=0pt, arc=6pt, left=10pt, right=10pt, top=10pt, bottom=10pt]
 \\noindent
-\\linespread{{1.6}}\\selectfont
+\\linespread{{1.8}}\\selectfont
 \\skillbadge{{Automatización de Procesos}}
 \\skillbadge{{Control Industrial}}
 \\skillbadge{{Ciberseguridad y Redes}}
@@ -242,20 +242,26 @@ def generate_latex_timeline_source(candidate_info: Dict[str, Any], application_d
 \\end{{tcolorbox}}
 
 \\section{{Idiomas}}
-\\begin{{itemize}}[label={{}}, leftmargin=0.3cm, itemsep=3pt]
+\\begin{{itemize}}[label={{}}, leftmargin=0.3cm, itemsep=6pt]
     \\item \\textbf{{Español}} \\hfill Nativo \\quad \\textcolor{{accent}}{{\\faCircle \\faCircle \\faCircle \\faCircle \\faCircle}}
     \\item \\textbf{{Inglés}} \\hfill B2 (Profesional de Trabajo) \\quad \\textcolor{{accent}}{{\\faCircle \\faCircle \\faCircle \\faCircle}} \\textcolor{{bulletline}}{{\\faCircle}}
     \\item \\textbf{{Francés}} \\hfill A2 \\quad \\textcolor{{accent}}{{\\faCircle \\faCircle}} \\textcolor{{bulletline}}{{\\faCircle \\faCircle \\faCircle}}
 \\end{{itemize}}
 
 \\section{{Certificaciones}}
-\\begin{{itemize}}[label={{\\color{{accentblue}}\\faAward}}, leftmargin=0.6cm, itemsep=3pt]
+\\begin{{itemize}}[label={{\\color{{accentblue}}\\faAward}}, leftmargin=0.6cm, itemsep=6pt]
     \\item \\textbf{{Ethical Hacking \\& Cybersecurity}} --- Cisco Networking Academy \\hfill \\textit{{04/2026}}
     \\item \\textbf{{CCNA: Introduction to Networks}} --- Cisco Networking Academy \\hfill \\textit{{07/2025}}
     \\item \\textbf{{Análisis Computacional de Datos Ambientales}} --- Universidad Nacional de Colombia \\hfill \\textit{{09/2025}}
     \\item \\textbf{{Introducción a la Fotónica Integrada y las Comunicaciones Cuánticas}} --- UNAL \\hfill \\textit{{07/2024}}
     \\item \\textbf{{Python Intermedio}} --- SoloLearn \\hfill \\textit{{03/2021}}
 \\end{{itemize}}
+
+\\vfill
+\\begin{{center}}
+    {{\\footnotesize\\color{{subtletext}}
+    \\faGlobe\\ Portafolio técnico y demostraciones de ingeniería en \\href{{https://sochoaq.wixsite.com/website-144}}{{sochoaq.wixsite.com/website-144}}}}
+\\end{{center}}
 
 \\end{{document}}
 """
