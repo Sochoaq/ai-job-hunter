@@ -18,35 +18,49 @@ def escape_latex(text: str) -> str:
     text = re.sub(r"^(situation|task|action|result|situaci[oó]n|tarea|acci[oó]n|resultado):\s*", "", text.strip(), flags=re.IGNORECASE)
     return text.strip()
 
+CORE_AM4_BULLETS = [
+    r"    \item Ejecución de pruebas, validación y diagnóstico a motores y equipos industriales en proyectos para clientes como Refoenergy y Brinsa, asegurando parámetros de operación y confiabilidad.",
+    r"    \item Realización de medidas técnicas e instrumentación en campo en proyectos para Geopark (DPS), garantizando la precisión, consistencia y calidad de los datos operativos.",
+    r"    \item Programación básica de controladores lógicos programables (PLC) mediante lenguajes de descripción de hardware (HDL), apoyando la automatización de procesos industriales.",
+    r"    \item Desarrollo de flujos para adquisición, limpieza y transformación de datos operativos provenientes de sistemas de medición, integrando diferentes fuentes de información.",
+    r"    \item Implementación de automatizaciones en Python y C/C++ para capturar, organizar y procesar variables de operación industrial, reduciendo tareas manuales y facilitando el monitoreo.",
+    r"    \item Ejecución de pruebas, validaciones y análisis de inconsistencias en sistemas y señales de campo, documentando hallazgos y apoyando la resolución estructurada de problemas.",
+    r"    \item Coordinación y documentación de actividades técnicas del proyecto, seguimiento de entregables y elaboración de reportes para mantener la trazabilidad de la información operativa."
+]
+
 def generate_latex_timeline_source(candidate_info: Dict[str, Any], application_data: Dict[str, Any]) -> str:
     """
     Construye el código fuente en LaTeX para la plantilla Timeline ejecutiva de 2 páginas
     con tipografía Charter, nodos TikZ, badges de habilidades y certificaciones Cisco/UNAL.
+    Garantiza una distribución perfectamente balanceada en ambas páginas sin espacios en blanco excesivos.
     """
     summary = escape_latex(application_data.get("cv_summary", ""))
-    if not summary:
-        summary = "Ingeniero Electrónico de la Universidad Nacional de Colombia (promedio 4.6/5.0) y actual Ingeniero de Proyectos en AM4. Especializado en el liderazgo de iniciativas de ingeniería, automatización de flujos de datos e infraestructura bajo entornos Linux y redes industriales."
+    if not summary or len(summary) < 80:
+        summary = r"\textbf{Ingeniero Electrónico} de la Universidad Nacional de Colombia (promedio 4.6/5.0) y actual \textbf{Ingeniero de Proyectos} en AM4. Especializado en el liderazgo de iniciativas de ingeniería, automatización de flujos de datos e infraestructura bajo entornos Linux y redes. Destacado por integrar capacidades de \textbf{Inteligencia Artificial y analítica} para robustecer la seguridad tecnológica, el monitoreo continuo y la mitigación de riesgos operativos. Con sólida formación en redes y ciberseguridad (\textbf{Cisco CCNA y Ethical Hacking}), capacidad probada en gestión de proyectos industriales de alta exigencia y residencia en Bogotá (disponibilidad híbrida)."
+    else:
+        # Enriquecer términos clave con negrita ATS
+        summary = summary.replace("Ingeniero Electrónico", r"\textbf{Ingeniero Electrónico}")
+        summary = summary.replace("Ingeniero de Proyectos", r"\textbf{Ingeniero de Proyectos}")
+        summary = summary.replace("Universidad Nacional de Colombia", r"\textbf{Universidad Nacional de Colombia}")
 
-    # Experiencia AM4
+    # Experiencia AM4: Asegurar 7 viñetas para equilibrar completamente la Página 1
     raw_exp = application_data.get("tailored_experience", [])
     am4_bullets = []
     for b in raw_exp:
         if "auxiliar" not in b.lower() and "universidad nacional" not in b.lower():
             clean_b = escape_latex(b)
-            if clean_b:
+            if clean_b and len(clean_b) > 20:
                 am4_bullets.append(f"    \\item {clean_b}")
 
-    if not am4_bullets:
-        am4_bullets = [
-            r"    \item Ejecución de pruebas, validación y diagnóstico a motores y equipos industriales en proyectos para clientes como Refoenergy y Brinsa, asegurando parámetros de operación y confiabilidad.",
-            r"    \item Realización de medidas técnicas e instrumentación en campo en proyectos para Geopark (DPS), garantizando la precisión, consistencia y calidad de los datos operativos.",
-            r"    \item Programación de controladores lógicos programables (PLC) mediante lenguajes de descripción de hardware (HDL), apoyando la automatización de procesos industriales.",
-            r"    \item Desarrollo de flujos para adquisición, limpieza y transformación de datos operativos provenientes de sistemas de medición, integrando diferentes fuentes de información.",
-            r"    \item Implementación de automatizaciones en Python y C/C++ para capturar, organizar y procesar variables de operación industrial, reduciendo tareas manuales y facilitando el monitoreo.",
-            r"    \item Coordinación y documentación de actividades técnicas del proyecto, seguimiento de entregables y elaboración de reportes para mantener la trazabilidad de la información operativa."
-        ]
+    # Completar con viñetas core de AM4 hasta tener exactamente 7 viñetas
+    for core_b in CORE_AM4_BULLETS:
+        if len(am4_bullets) >= 7:
+            break
+        core_sample = core_b[15:45].lower()
+        if not any(core_sample in b.lower() for b in am4_bullets):
+            am4_bullets.append(core_b)
 
-    # Proyectos
+    # Proyectos: 2 proyectos con 3 viñetas detalladas cada uno para equilibrar la Página 2
     raw_proj = application_data.get("tailored_projects", [])
     proj_code_blocks = []
     if raw_proj:
@@ -58,21 +72,25 @@ def generate_latex_timeline_source(candidate_info: Dict[str, Any], application_d
             proj_code_blocks.append(f"""\\cventry{{{p_name}}}{{Ingeniería de Proyectos y Analítica}}{{Bogotá}}{{2026}}
 {{
     \\item {p_desc}
+    \\item Implementación de flujos de análisis, validación de señales y automatización de reportes operativos mediante Python y SQL.
     \\item Desarrollo de componentes para almacenamiento, consulta, visualización y documentación de los resultados, facilitando la trazabilidad operativa.
 }}""")
-    else:
-        proj_code_blocks.append(r"""\cventry{Procesamiento y análisis de sistemas de medición}{Python y automatización de reportes}{Bogotá}{2026}
+
+    if len(proj_code_blocks) < 2:
+        proj_code_blocks = [
+            r"""\cventry{Procesamiento y análisis de sistemas de medición}{Python y automatización de reportes}{Bogotá}{2026}
 {
     \item Desarrollo de un flujo para adquirir, estructurar y procesar datos provenientes de instrumentación y medición, incluyendo validación de registros y análisis de resultados mediante Python.
     \item Implementación de calibración, transformación y visualización de datos industriales, junto con generación automática de informes para facilitar el seguimiento operativo.
     \item Realización de controles de calidad y pruebas de consistencia para identificar señales atípicas, errores de adquisición y oportunidades de mejora en procesos de control.
-}""")
-        proj_code_blocks.append(r"""\cventry{Análisis de datos para inspección técnica}{AM4}{Bogotá}{2026}
+}""",
+            r"""\cventry{Análisis de datos para inspección técnica}{AM4}{Bogotá}{2026}
 {
     \item Procesamiento y organización de datos de inspección aérea y modelos de visión artificial para la detección y monitoreo automático de infraestructura eléctrica y postes.
     \item Análisis de métricas, validación de resultados y seguimiento de pruebas de campo para evaluar la calidad de las inspecciones y apoyar decisiones de mantenimiento.
     \item Desarrollo de componentes para almacenamiento, consulta, visualización y documentación de los resultados, facilitando la trazabilidad del estado de la infraestructura.
-}""")
+}"""
+        ]
 
     projects_latex = "\n\n".join(proj_code_blocks)
 
