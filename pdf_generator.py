@@ -181,8 +181,6 @@ def generate_latex_timeline_source(candidate_info: Dict[str, Any], application_d
     \\faLinkedin\\ \\href{{https://linkedin.com/in/santiago-alejandro-ochoa-quesada-a07a18288/}}{{LinkedIn}}
     \\quad\\textcolor{{bulletline}}{{\\textbar}}\\quad
     \\faGithub\\ \\href{{https://github.com/Sochoaq}}{{GitHub}}
-    \\quad\\textcolor{{bulletline}}{{\\textbar}}\\quad
-    \\faGlobe\\ \\href{{https://sochoaq.wixsite.com/website-144}}{{Portafolio}}
     }}
 \\end{{center}}
 \\vspace{{4pt}}
@@ -260,7 +258,7 @@ def generate_latex_timeline_source(candidate_info: Dict[str, Any], application_d
 \\vfill
 \\begin{{center}}
     {{\\footnotesize\\color{{subtletext}}
-    \\faGlobe\\ Portafolio técnico y demostraciones de ingeniería en \\href{{https://sochoaq.wixsite.com/website-144}}{{sochoaq.wixsite.com/website-144}}}}
+    \\faGithub\\ Código fuente, proyectos técnicos y repositorios disponibles en \\href{{https://github.com/Sochoaq}}{{github.com/Sochoaq}}}}
 \\end{{center}}
 
 \\end{{document}}

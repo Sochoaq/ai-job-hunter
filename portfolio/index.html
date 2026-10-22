@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Santiago Alejandro Ochoa Quesada | Portafolio de Ingeniería</title>
+  <meta name="description" content="Portafolio profesional de Santiago Alejandro Ochoa Quesada. Ingeniero Electrónico (UNAL, 4.6/5.0) e Ingeniero de Proyectos en AM4. Control, Automatización, IA e Infraestructura.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0B0F17;
+      --bg-card: rgba(17, 24, 39, 0.75);
+      --bg-card-hover: rgba(30, 41, 59, 0.85);
+      --border: rgba(255, 255, 255, 0.08);
+      --border-accent: rgba(56, 189, 248, 0.4);
+      --text: #F3F4F6;
+      --text-muted: #9CA3AF;
+      --accent: #38BDF8;
+      --accent-glow: rgba(56, 189, 248, 0.15);
+      --primary: #2563EB;
+      --success: #10B981;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+      overflow-x: hidden;
+      background-image: 
+        radial-gradient(circle at 15% 20%, rgba(56, 189, 248, 0.08) 0%, transparent 40%),
+        radial-gradient(circle at 85% 60%, rgba(37, 99, 235, 0.08) 0%, transparent 40%);
+    }
+    .container {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem;
+    }
+    header {
+      padding: 3rem 0 2rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .badge-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.35rem 0.85rem;
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      color: #34D399;
+      font-size: 0.8rem;
+      font-weight: 600;
+      border-radius: 9999px;
+      margin-bottom: 1.25rem;
+    }
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      background: #10B981;
+      border-radius: 50%;
+      box-shadow: 0 0 10px #10B981;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.85); }
+    }
+    h1 {
+      font-size: 2.75rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      background: linear-gradient(135deg, #FFFFFF 30%, #94A3B8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 0.75rem;
+    }
+    .hero-title {
+      font-size: 1.25rem;
+      color: var(--accent);
+      font-weight: 500;
+      margin-bottom: 1rem;
+    }
+    .hero-desc {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      max-width: 780px;
+      margin-bottom: 1.75rem;
+    }
+    .contact-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.45rem 0.95rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text);
+      text-decoration: none;
+      font-size: 0.875rem;
+      border-radius: 8px;
+      transition: all 0.2s ease;
+    }
+    .pill:hover {
+      border-color: var(--accent);
+      background: var(--bg-card-hover);
+      color: var(--accent);
+      transform: translateY(-1px);
+    }
+    .pill-primary {
+      background: linear-gradient(135deg, var(--primary), #1D4ED8);
+      border-color: rgba(56, 189, 248, 0.5);
+      color: #fff;
+      font-weight: 600;
+    }
+    .pill-primary:hover {
+      box-shadow: 0 4px 16px rgba(37, 99, 235, 0.4);
+      color: #fff;
+    }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin: 2.5rem 0;
+    }
+    .stat-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      padding: 1.25rem;
+      border-radius: 12px;
+      text-align: center;
+      backdrop-filter: blur(8px);
+    }
+    .stat-val {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--accent);
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .stat-lbl {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-top: 0.25rem;
+    }
+    section {
+      margin: 3.5rem 0;
+    }
+    .section-head {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1.75rem;
+    }
+    .section-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: -0.02em;
+    }
+    .section-line {
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 1.25rem;
+      backdrop-filter: blur(8px);
+      transition: all 0.2s ease;
+    }
+    .card:hover {
+      border-color: var(--border-accent);
+      background: var(--bg-card-hover);
+      transform: translateY(-2px);
+    }
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 0.75rem;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .card-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #fff;
+    }
+    .card-subtitle {
+      font-size: 0.9rem;
+      color: var(--accent);
+      font-weight: 500;
+    }
+    .card-date {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      background: rgba(255, 255, 255, 0.04);
+      padding: 0.2rem 0.6rem;
+      border-radius: 6px;
+    }
+    .bullets {
+      list-style: none;
+      padding: 0;
+    }
+    .bullets li {
+      position: relative;
+      padding-left: 1.4rem;
+      margin-bottom: 0.5rem;
+      font-size: 0.925rem;
+      color: #D1D5DB;
+    }
+    .bullets li::before {
+      content: "•";
+      position: absolute;
+      left: 0.35rem;
+      color: var(--accent);
+      font-weight: bold;
+    }
+    .skills-wrapper {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .skill-tag {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border);
+      color: #E2E8F0;
+      padding: 0.35rem 0.75rem;
+      border-radius: 6px;
+      font-size: 0.825rem;
+      font-weight: 500;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .cert-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1rem;
+    }
+    .cert-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      padding: 1.25rem;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      transition: all 0.2s ease;
+    }
+    .cert-card:hover {
+      border-color: var(--border-accent);
+      transform: translateY(-2px);
+    }
+    .cert-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 8px;
+      background: rgba(56, 189, 248, 0.1);
+      border: 1px solid rgba(56, 189, 248, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent);
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+    .cert-name {
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: #fff;
+    }
+    .cert-issuer {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2.5rem 0;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.875rem;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <div class="badge-status">
+        <span class="status-dot"></span>
+        Disponible para Proyectos Industriales & Ingeniería Multidisciplinaria
+      </div>
+      <h1>Santiago Alejandro Ochoa Quesada</h1>
+      <div class="hero-title">Ingeniero Electrónico | Control, Automatización, AI & Cloud Systems</div>
+      <p class="hero-desc">
+        Graduado de la <strong>Universidad Nacional de Colombia</strong> con promedio de <strong>4.6 / 5.0</strong>. Actual <strong>Ingeniero de Proyectos en AM4</strong>, especializado en integración de instrumentación, adquisición de datos de alta frecuencia, automatizaciones en Python/C++ y robustecimiento de infraestructura para clientes industriales de alta exigencia (Geopark, Refoenergy, Brinsa).
+      </p>
+
+      <div class="contact-pills">
+        <a href="mailto:santy.alejo4@gmail.com" class="pill">
+          ✉️ santy.alejo4@gmail.com
+        </a>
+        <a href="tel:+573203517153" class="pill">
+          📞 +57 320 351 7153
+        </a>
+        <a href="https://linkedin.com/in/santiago-alejandro-ochoa-quesada-a07a18288/" target="_blank" rel="noopener noreferrer" class="pill">
+          💼 LinkedIn
+        </a>
+        <a href="https://github.com/Sochoaq" target="_blank" rel="noopener noreferrer" class="pill">
+          🐙 GitHub (@Sochoaq)
+        </a>
+        <span class="pill">
+          📍 Bogotá, Colombia
+        </span>
+      </div>
+    </header>
+
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-val">4.6 / 5.0</div>
+        <div class="stat-lbl">Promedio Académico UNAL</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-val">50 kHz</div>
+        <div class="stat-lbl">Muestreo en Telemetría DPS</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-val">40%</div>
+        <div class="stat-lbl">Reducción de Fallos Operativos</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-val">5 Certs</div>
+        <div class="stat-lbl">Cisco CCNA, Cyber & UNAL</div>
+      </div>
+    </div>
+
+    <!-- EXPERIENCIA -->
+    <section>
+      <div class="section-head">
+        <h2 class="section-title">Experiencia Profesional</h2>
+        <div class="section-line"></div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">Ingeniero de Proyectos (Control y Automatización)</div>
+            <div class="card-subtitle">AM4 • Bogotá, Colombia</div>
+          </div>
+          <div class="card-date">04/2026 — Actualidad</div>
+        </div>
+        <ul class="bullets">
+          <li>Ejecución de pruebas, validación y diagnóstico a motores y equipos industriales en proyectos para clientes como Refoenergy y Brinsa, asegurando parámetros de operación y confiabilidad.</li>
+          <li>Realización de medidas técnicas e instrumentación en campo en proyectos para Geopark (DPS), garantizando la precisión, consistencia y calidad de los datos operativos.</li>
+          <li>Programación básica de controladores lógicos programables (PLC) mediante lenguajes de descripción de hardware (HDL), apoyando la automatización de procesos industriales.</li>
+          <li>Desarrollo de flujos para adquisición, limpieza y transformación de datos operativos provenientes de sistemas de medición, integrando diferentes fuentes de información.</li>
+          <li>Implementación de automatizaciones en Python y C/C++ para capturar, organizar y procesar variables de operación industrial, reduciendo tareas manuales y facilitando el monitoreo.</li>
+          <li>Coordinación y documentación de actividades técnicas del proyecto, seguimiento de entregables y elaboración de reportes para mantener la trazabilidad de la información operativa.</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">Auxiliar Estudiantil</div>
+            <div class="card-subtitle">Universidad Nacional de Colombia • Bogotá</div>
+          </div>
+          <div class="card-date">07/2024 — 11/2025</div>
+        </div>
+        <ul class="bullets">
+          <li>Apoyo en laboratorios mediante organización, validación y análisis de resultados experimentales, programación, simulación y depuración de sistemas digitales y señales.</li>
+          <li>Preparación y verificación de prácticas, registros, equipos de instrumentación y material técnico, asegurando consistencia en la toma de datos.</li>
+          <li>Acompañamiento a estudiantes en análisis de resultados, identificación de errores y resolución de problemas de electrónica y control durante prácticas de laboratorio.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- PROYECTOS -->
+    <section>
+      <div class="section-head">
+        <h2 class="section-title">Proyectos de Ingeniería Destacados</h2>
+        <div class="section-line"></div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">DPS Analyzer & Industrial Metrology AI</div>
+            <div class="card-subtitle">Python • DSP • FFT Armónica • Docker • CI/CD</div>
+          </div>
+          <div class="card-date">2026</div>
+        </div>
+        <ul class="bullets">
+          <li>Desarrollo de un pipeline para adquirir, estructurar y procesar datos provenientes de instrumentación y medición continua a 50 kHz.</li>
+          <li>Implementación de calibración, transformación y visualización de datos industriales, junto con generación automática de informes para facilitar el seguimiento operativo.</li>
+          <li>Controles de calidad y pruebas de consistencia para identificar señales atípicas y errores de adquisición en alta tensión.</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">Análisis de Datos e Inspección Técnica con Visión Artificial</div>
+            <div class="card-subtitle">AM4 • Computer Vision • Cloud Storage • Analytics</div>
+          </div>
+          <div class="card-date">2026</div>
+        </div>
+        <ul class="bullets">
+          <li>Procesamiento y organización de datos de inspección aérea y modelos de visión artificial para la detección y monitoreo automático de infraestructura eléctrica y postes.</li>
+          <li>Análisis de métricas, validación de resultados y seguimiento de pruebas de campo para evaluar la calidad de las inspecciones.</li>
+          <li>Desarrollo de componentes para almacenamiento, consulta, visualización y documentación de los resultados técnicos.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- EDUCACIÓN Y CERTIFICACIONES -->
+    <section>
+      <div class="section-head">
+        <h2 class="section-title">Educación y Certificaciones</h2>
+        <div class="section-line"></div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">Ingeniería Electrónica</div>
+            <div class="card-subtitle">Universidad Nacional de Colombia • Bogotá</div>
+          </div>
+          <div class="card-date">02/2021 — 11/2025</div>
+        </div>
+        <p style="color: var(--accent); font-weight: 600; margin-bottom: 0.5rem;">Promedio Académico: 4.6 / 5.0</p>
+        <p style="color: #94A3B8; font-size: 0.9rem;">Formación rigurosa en control continuo y discreto, automatización, sistemas digitales, procesamiento de señales, instrumentación, comunicaciones y análisis numérico.</p>
+      </div>
+
+      <div class="cert-grid">
+        <div class="cert-card">
+          <div class="cert-icon">🛡️</div>
+          <div>
+            <div class="cert-name">Ethical Hacking & Cybersecurity</div>
+            <div class="cert-issuer">Cisco Networking Academy • 04/2026</div>
+          </div>
+        </div>
+
+        <div class="cert-card">
+          <div class="cert-icon">🌐</div>
+          <div>
+            <div class="cert-name">CCNA: Introduction to Networks</div>
+            <div class="cert-issuer">Cisco Networking Academy • 07/2025</div>
+          </div>
+        </div>
+
+        <div class="cert-card">
+          <div class="cert-icon">📊</div>
+          <div>
+            <div class="cert-name">Análisis Computacional de Datos Ambientales</div>
+            <div class="cert-issuer">Universidad Nacional de Colombia • 09/2025</div>
+          </div>
+        </div>
+
+        <div class="cert-card">
+          <div class="cert-icon">⚛️</div>
+          <div>
+            <div class="cert-name">Fotónica Integrada & Comunicaciones Cuánticas</div>
+            <div class="cert-issuer">Universidad Nacional de Colombia • 07/2024</div>
+          </div>
+        </div>
+
+        <div class="cert-card">
+          <div class="cert-icon">🐍</div>
+          <div>
+            <div class="cert-name">Python Intermedio</div>
+            <div class="cert-issuer">SoloLearn • 03/2021</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section>
+      <div class="section-head">
+        <h2 class="section-title">Habilidades y Tecnologías</h2>
+        <div class="section-line"></div>
+      </div>
+
+      <div class="skills-wrapper">
+        <span class="skill-tag">Automatización de Procesos</span>
+        <span class="skill-tag">Control Industrial</span>
+        <span class="skill-tag">Programación de PLC</span>
+        <span class="skill-tag">HDL</span>
+        <span class="skill-tag">Pruebas a Motores</span>
+        <span class="skill-tag">Instrumentación</span>
+        <span class="skill-tag">Variación de Frecuencia</span>
+        <span class="skill-tag">Python</span>
+        <span class="skill-tag">C/C++</span>
+        <span class="skill-tag">SQL</span>
+        <span class="skill-tag">Linux</span>
+        <span class="skill-tag">Docker</span>
+        <span class="skill-tag">Cisco CCNA</span>
+        <span class="skill-tag">Ethical Hacking</span>
+        <span class="skill-tag">Adquisición de Datos (50 kHz)</span>
+        <span class="skill-tag">Validación de Señales</span>
+        <span class="skill-tag">Gestión de Proyectos</span>
+        <span class="skill-tag">Git / CI/CD</span>
+      </div>
+    </section>
+
+    <footer>
+      <p>Santiago Alejandro Ochoa Quesada • Portafolio de Ingeniería</p>
+      <p style="margin-top: 0.5rem; font-size: 0.8rem; color: #64748B;">
+        Código alojado en <a href="https://github.com/Sochoaq" style="color: var(--accent); text-decoration: none;">GitHub (@Sochoaq)</a>
+      </p>
+    </footer>
+  </div>
+
+</body>
+</html>

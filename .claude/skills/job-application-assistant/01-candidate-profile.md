@@ -7,7 +7,7 @@ phone: "+57 320 351 7153"
 location: "Bogotá, Colombia"
 linkedin: "https://www.linkedin.com/in/santiago-alejandro-ochoa-quesada-a07a18288"
 github: "https://github.com/Sochoaq"
-portfolio: "https://sochoaq.wixsite.com/website-144"
+portfolio: "https://sochoaq.github.io"
 education:
   degree: "Ingeniería Electrónica"
   institution: "Universidad Nacional de Colombia (UNAL)"
