@@ -160,8 +160,8 @@ def menu_tracker():
 
     print("\nAcciones rápidas:")
     print(" - Escribe el [ID] de una postulación para ver detalles, abrir su PDF o actualizar estado.")
+    print(" - Escribe [D] para abrir el Dashboard visual interactivo (Navegador Web / Excel).")
     print(" - Escribe [A] para abrir la carpeta 'output/' en el Explorador de Windows.")
-    print(" - Escribe [D] para abrir el archivo 'job_tracker.db'.")
     print(" - Presiona [Enter] para volver al menú principal.")
 
     action = input("\nSelecciona una opción: ").strip().upper()
@@ -174,10 +174,15 @@ def menu_tracker():
             print(f"[!] No se pudo abrir la carpeta: {e}")
     elif action == "D":
         try:
-            os.startfile(job_tracker.DB_PATH)
-            print(f"[OK] Archivo 'job_tracker.db' abierto.")
+            import webbrowser
+            html_path = job_tracker.export_dashboard()
+            webbrowser.open(html_path)
+            print(f"[OK] ¡Dashboard visual abierto en tu navegador web!")
+            print(f"📄 Ruta HTML: {html_path}")
+            print(f"📊 Archivo CSV para Excel: output/seguimiento_postulaciones.csv")
         except Exception as e:
-            print(f"[!] Archivo job_tracker.db está en: {job_tracker.DB_PATH}")
+            print(f"[!] Error al generar dashboard: {e}")
+            os.system(f'explorer /select,"{job_tracker.DB_PATH}"')
     elif action.isdigit():
         app_id = int(action)
         app = next((x for x in apps if x["id"] == app_id), None)
