@@ -255,12 +255,6 @@ def generate_latex_timeline_source(candidate_info: Dict[str, Any], application_d
     \\item \\textbf{{Python Intermedio}} --- SoloLearn \\hfill \\textit{{03/2021}}
 \\end{{itemize}}
 
-\\vfill
-\\begin{{center}}
-    {{\\footnotesize\\color{{subtletext}}
-    \\faGithub\\ Código fuente, proyectos técnicos y repositorios disponibles en \\href{{https://github.com/Sochoaq}}{{github.com/Sochoaq}}}}
-\\end{{center}}
-
 \\end{{document}}
 """
     return latex_source
