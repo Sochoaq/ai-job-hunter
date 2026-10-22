@@ -2,6 +2,7 @@ import os
 import sys
 import json
 import re
+import time
 from typing import Dict, Any, List
 from pydantic import BaseModel, Field
 from dotenv import load_dotenv
@@ -96,15 +97,22 @@ class Orchestrator:
 
             Evalúa la vacante, identifica el track dominante, evalúa el fit de idioma y calcula el fit score exacto (0-100).
             """
-            response = client.models.generate_content(
-                model="gemini-3.5-flash-lite",
-                contents=prompt,
-                config=dict(
-                    response_mime_type="application/json",
-                    response_schema=FitAnalysis,
-                ),
-            )
-            return json.loads(response.text)
+            for attempt in range(3):
+                try:
+                    response = client.models.generate_content(
+                        model="gemini-3.5-flash-lite",
+                        contents=prompt,
+                        config=dict(
+                            response_mime_type="application/json",
+                            response_schema=FitAnalysis,
+                        ),
+                    )
+                    return json.loads(response.text)
+                except Exception as ex:
+                    if attempt < 2 and ("503" in str(ex) or "UNAVAILABLE" in str(ex) or "high demand" in str(ex)):
+                        time.sleep(2 * (attempt + 1))
+                        continue
+                    raise ex
         except Exception as e:
             return {"error": f"Error evaluando vacante: {str(e)}"}
 
@@ -144,15 +152,22 @@ class Orchestrator:
             3. tailored_projects: 2 proyectos clave con el stack exacto.
             4. cover_letter: Carta de presentación impecable (en inglés si la oferta es en inglés, o en español).
             """
-            response = client.models.generate_content(
-                model="gemini-3.5-flash-lite",
-                contents=prompt,
-                config=dict(
-                    response_mime_type="application/json",
-                    response_schema=TailoredApplication,
-                ),
-            )
-            return json.loads(response.text)
+            for attempt in range(3):
+                try:
+                    response = client.models.generate_content(
+                        model="gemini-3.5-flash-lite",
+                        contents=prompt,
+                        config=dict(
+                            response_mime_type="application/json",
+                            response_schema=TailoredApplication,
+                        ),
+                    )
+                    return json.loads(response.text)
+                except Exception as ex:
+                    if attempt < 2 and ("503" in str(ex) or "UNAVAILABLE" in str(ex) or "high demand" in str(ex)):
+                        time.sleep(2 * (attempt + 1))
+                        continue
+                    raise ex
         except Exception as e:
             return {"error": f"Error redactando postulación: {str(e)}"}
 
