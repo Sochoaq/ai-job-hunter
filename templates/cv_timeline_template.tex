@@ -1,0 +1,247 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=0.7in, top=0.6in, bottom=0.6in]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{charter}
+\usepackage{fontawesome5}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{tikz}
+\usepackage{hyperref}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins, breakable}
+\usepackage{microtype}
+
+% --- Colores ---
+\definecolor{headerbg}{HTML}{FFFFFF}
+\definecolor{accent}{HTML}{2C3E50}
+\definecolor{lightgray}{HTML}{F8F9FA}
+\definecolor{darktext}{HTML}{2C3E50}
+\definecolor{skillbg}{HTML}{374151}
+\definecolor{bulletline}{HTML}{9CA3AF}
+\definecolor{subtletext}{HTML}{6B7280}
+
+% --- Configuración de Enlaces ---
+\hypersetup{
+    colorlinks=true,
+    linkcolor=accent,
+    urlcolor=accent,
+}
+
+% --- Estilos de Títulos de Sección ---
+\titleformat{\section}{\large\bfseries\color{accent}}{}{0em}{}[\titlerule]
+\titlespacing{\section}{0pt}{10pt}{8pt}
+
+% Comando especial de sección para reiniciar la línea de tiempo
+\newcommand{\cvsection}[1]{
+    \setcounter{cventrycount}{0}
+    \section{#1}
+}
+
+% --- Caja de Habilidades (Skill Badge) ---
+\newtcbox{\skillbadge}{
+    on line, box align=base,
+    colback=skillbg, colframe=skillbg,
+    colupper=white,
+    fontupper=\small\bfseries,
+    arc=4pt, boxrule=0pt,
+    left=6pt, right=6pt, top=3pt, bottom=3pt,
+    boxsep=0pt
+}
+
+% --- Caja para las Descripciones (Línea punteada) ---
+\newtcolorbox{cvdescbox}{
+    blanker,
+    breakable,
+    borderline west={1.5pt}{0pt}{bulletline, dash pattern=on 1.5pt off 1.5pt},
+    left=1.2em,
+    top=0pt,
+    bottom=0pt,
+    before skip=1ex,
+    after skip=0pt
+}
+
+% --- Contador para la Línea de Tiempo ---
+\newcounter{cventrycount}
+
+% --- Comando Principal para Experiencia / Educación ---
+\newcommand{\cventry}[5]{%
+  \stepcounter{cventrycount}%
+  \noindent
+  % Columna Izquierda: Gráfico de Línea de Tiempo
+  \begin{minipage}[t]{0.7cm}
+    \vspace{0pt}%
+    \tikz[remember picture, baseline=-0.5ex]
+      \node[draw=accent, fill=white, circle, inner sep=2pt, line width=1.5pt]
+      (cventry\thecventrycount) {};
+  \end{minipage}%
+  % Columna Derecha: Contenido
+  \begin{minipage}[t]{\dimexpr\textwidth-0.7cm\relax}
+    \vspace{0pt}%
+    {\large\bfseries\color{accent} #1}\par
+    \vspace{0.3ex}%
+    {\normalsize\bfseries\color{darktext} #2}\par
+    \vspace{0.3ex}%
+    {\small\color{subtletext}\textit{#3} \hfill \textit{#4}}\par
+    \vspace{0.5ex}%
+    \begin{cvdescbox}
+      \small\color{darktext}
+      \begin{itemize}[label={}, leftmargin=0pt, itemsep=0.8ex, parsep=0pt, topsep=0pt, partopsep=0pt]
+        #5
+      \end{itemize}
+    \end{cvdescbox}
+  \end{minipage}\par
+  \vspace{3ex}%
+  % Conectar automáticamente con el nodo anterior
+  \ifnum\value{cventrycount}>1
+    \begin{tikzpicture}[remember picture, overlay]
+      \edef\prev{\the\numexpr\value{cventrycount}-1\relax}
+      \draw[bulletline, line width=1.5pt] (cventry\prev.south) -- (cventry\thecventrycount.north);
+    \end{tikzpicture}
+  \fi
+}
+
+\begin{document}
+\thispagestyle{empty}
+\pagecolor{headerbg}
+\color{darktext}
+
+% --- Encabezado ---
+\begin{center}
+    {\Huge \bfseries\color{accent} SANTIAGO ALEJANDRO OCHOA QUESADA} \\[8pt]
+    {\small\color{darktext}
+    \faEnvelope\ \href{mailto:santy.alejo4@gmail.com}{santy.alejo4@gmail.com}
+    \quad\textcolor{bulletline}{\textbar}\quad
+    \faPhone\ +57\,320\,351\,7153
+    \quad\textcolor{bulletline}{\textbar}\quad
+    \faMapMarker*\ Bogotá, Colombia \\[5pt]
+    \faLinkedin\ \href{https://linkedin.com/in/santiago-alejandro-ochoa-quesada-a07a18288/}{LinkedIn}
+    \quad\textcolor{bulletline}{\textbar}\quad
+    \faGithub\ \href{https://github.com/Sochoaq}{GitHub}
+    \quad\textcolor{bulletline}{\textbar}\quad
+    \faGlobe\ \href{https://sochoaq.wixsite.com/website-144}{Portafolio}
+    }
+\end{center}
+\vspace{10pt}
+
+% --- Resumen Profesional ---
+\section{Perfil Profesional}
+\textbf{Ingeniero Electrónico} de la Universidad Nacional de Colombia, orientado al área de control y automatización de procesos y maquinaria industrial. Sólidos conocimientos teóricos y prácticos en control de procesos, instrumentación, variación de frecuencia y sistemas digitales. Capacidad probada para integrar tecnologías, realizar diagnósticos en campo, programar lógicas de control y estructurar información técnica para la toma de decisiones. Perfil analítico e interdisciplinario, caracterizado por una alta capacidad de aprendizaje, atención al detalle y un enfoque estructurado para optimizar operaciones y cumplir los objetivos de proyectos industriales.
+
+% --- Experiencia ---
+\cvsection{Experiencia Profesional}
+
+\cventry{Ingeniero de Proyectos (Control y Automatización)}{AM4}{Bogotá}{04/2026 --- Actualidad}
+{
+    \item Ejecución de pruebas, validación y diagnóstico a motores y equipos industriales en proyectos para clientes como Refoenergy y Brinsa, asegurando parámetros de operación y confiabilidad.
+    \item Realización de medidas técnicas e instrumentación en campo en proyectos para Geopark (DPS), garantizando la precisión, consistencia y calidad de los datos operativos.
+    \item Programación básica de controladores lógicos programables (PLC) mediante lenguajes de descripción de hardware (HDL), apoyando la automatización de procesos industriales.
+    \item Desarrollo de flujos para adquisición, limpieza y transformación de datos operativos provenientes de sistemas de medición, integrando diferentes fuentes de información.
+    \item Implementación de automatizaciones en Python y C/C++ para capturar, organizar y procesar variables de operación industrial, reduciendo tareas manuales y facilitando el monitoreo.
+    \item Ejecución de pruebas, validaciones y análisis de inconsistencias en sistemas y señales de campo, documentando hallazgos y apoyando la resolución estructurada de problemas.
+    \item Coordinación y documentación de actividades técnicas del proyecto, seguimiento de entregables y elaboración de reportes para mantener la trazabilidad de la información operativa.
+}
+
+\cventry{Auxiliar Estudiantil}{Universidad Nacional de Colombia}{Bogotá}{07/2024 --- 11/2025}
+{
+    \item Apoyo en laboratorios mediante organización, validación y análisis de resultados experimentales, programación, simulación y depuración de sistemas digitales y señales.
+    \item Preparación y verificación de prácticas, registros, equipos de instrumentación y material técnico, asegurando consistencia en la toma de datos durante las sesiones.
+    \item Acompañamiento a estudiantes en análisis de resultados, identificación de errores y resolución de problemas de electrónica y control durante prácticas de laboratorio.
+    \item Elaboración de guías, reportes y presentaciones técnicas para documentar procedimientos, fallas, hallazgos y aprendizajes de manera estructurada.
+}
+
+% --- Proyectos Técnicos ---
+\cvsection{Proyectos Relevantes}
+
+\cventry{Procesamiento y análisis de sistemas de medición}{Python y automatización de reportes}{Bogotá}{2026}
+{
+    \item Desarrollo de un flujo para adquirir, estructurar y procesar datos provenientes de instrumentación y medición, incluyendo validación de registros y análisis de resultados mediante Python.
+    \item Implementación de calibración, transformación y visualización de datos industriales, junto con generación automática de informes para facilitar el seguimiento operativo.
+    \item Realización de controles de calidad y pruebas de consistencia para identificar señales atípicas, errores de adquisición y oportunidades de mejora en procesos de control.
+}
+
+\cventry{Análisis de datos para inspección técnica}{AM4}{Bogotá}{ 2026}
+{
+    \item Procesamiento y organización de datos de inspección aérea y modelos de visión artificial para la detección y monitoreo automático de infraestructura eléctrica y postes.
+    \item Análisis de métricas, validación de resultados y seguimiento de pruebas de campo para evaluar la calidad de las inspecciones y apoyar decisiones de mantenimiento.
+    \item Desarrollo de componentes para almacenamiento, consulta, visualización y documentación de los resultados, facilitando la trazabilidad del estado de la infraestructura.
+}
+
+% --- Educación ---
+\cvsection{Educación}
+
+\cventry{Ingeniería Electrónica}{Universidad Nacional de Colombia}{Bogotá}{02/2021 --- 11/2025}
+{
+    \item \textbf{Promedio académico: 4.6/5.0}.
+    \item Formación en control continuo y discreto, automatización, sistemas digitales, procesamiento de señales, instrumentación, comunicaciones y análisis numérico.
+    \item Desarrollo de proyectos enfocados en simulación de procesos, programación de hardware, validación experimental y elaboración de reportes técnicos de ingeniería.
+}
+
+% --- Habilidades ---
+\section{Habilidades}
+\begin{tcolorbox}[colback=lightgray, colframe=lightgray, boxrule=0pt, arc=6pt, left=10pt, right=10pt, top=10pt, bottom=10pt]
+\noindent
+\linespread{1.8}\selectfont
+\skillbadge{Automatización de Procesos}
+\skillbadge{Control Industrial}
+\skillbadge{Programación de PLC}
+\skillbadge{HDL}
+\skillbadge{Pruebas a Motores}
+\skillbadge{Instrumentación}
+\skillbadge{Variación de Frecuencia}
+\skillbadge{Python}
+\skillbadge{C/C++}
+\skillbadge{SQL}
+\skillbadge{Adquisición de Datos}
+\skillbadge{Validación de Señales}
+\skillbadge{Resolución de Problemas}
+\skillbadge{Sistemas Digitales}
+\skillbadge{Documentación Técnica}
+\skillbadge{Gestión de Proyectos}
+\skillbadge{Trabajo en Equipo}
+\skillbadge{Atención al Detalle}
+\skillbadge{Aprendizaje Ágil}
+\skillbadge{Excel y Reportes}
+\end{tcolorbox}
+
+% --- Idiomas ---
+\section{Idiomas}
+\begin{itemize}[label={}, leftmargin=0.3cm, itemsep=4pt]
+    \item \textbf{Español} \hfill Nativo
+    \quad \textcolor{accent}{\faCircle \faCircle \faCircle \faCircle \faCircle}
+    \item \textbf{Inglés} \hfill B2
+    \quad \textcolor{accent}{\faCircle \faCircle \faCircle \faCircle}
+    \textcolor{bulletline}{\faCircle}
+    \item \textbf{Francés} \hfill A2
+    \quad \textcolor{accent}{\faCircle \faCircle}
+    \textcolor{bulletline}{\faCircle \faCircle \faCircle}
+\end{itemize}
+
+% --- Certificaciones ---
+\section{Certificaciones}
+\begin{itemize}[label={\color{accent}\faAward}, leftmargin=0.6cm, itemsep=4pt]
+    \item \textbf{Análisis Computacional de Datos Ambientales}
+    --- Universidad Nacional de Colombia
+    \hfill \textit{09/2025}
+    \item \textbf{CCNA: Introduction to Networks}
+    --- Cisco Networking Academy
+    \hfill \textit{07/2025}
+    \item \textbf{Introducción a la Fotónica Integrada y las Comunicaciones Cuánticas}
+    --- Universidad Nacional de Colombia
+    \hfill \textit{07/2024}
+    \item \textbf{Python Intermedio}
+    --- SoloLearn
+    \hfill \textit{03/2021}
+    \item \textbf{Ethical Hacking \& Cybersecurity}
+    --- Cisco Networking Academy
+    \hfill \textit{04/2026}
+\end{itemize}
+
+\vfill
+\begin{center}
+    {\footnotesize\color{subtletext}
+    \textit{}}
+\end{center}
+
+\end{document}

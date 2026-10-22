@@ -123,3 +123,7 @@ company_research/*.json
 output/
 *.db
 job_tracker.db
+
+# Tools binaries
+tools/*.exe
+*.exe
