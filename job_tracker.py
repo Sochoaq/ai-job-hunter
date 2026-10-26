@@ -1,11 +1,33 @@
 import sqlite3
 import os
+import re
 import csv
 import webbrowser
 from datetime import datetime
 from typing import List, Dict, Any, Optional
 
 DB_PATH = os.path.join(os.path.dirname(__file__), "job_tracker.db")
+
+def resolve_document_file(output_dir: str, company: str, doc_type: str = "CV") -> Optional[str]:
+    """
+    Resuelve el nombre del archivo PDF de CV o Cover Letter en output_dir,
+    incluso si el nombre de empresa en la BD incluye detalles como 'Porvenir (Grupo Aval)' o 'Experis Colombia'.
+    """
+    if not os.path.exists(output_dir):
+        return None
+    files = set(os.listdir(output_dir))
+    safe_comp = "".join(c for c in company if c.isalnum() or c in (" ", "_", "-")).strip().replace(" ", "_")
+    exact = f"CV_Santiago_Ochoa_{safe_comp}.pdf" if doc_type == "CV" else f"Cover_Letter_{safe_comp}.pdf"
+    if exact in files:
+        return exact
+
+    # Búsqueda por primera palabra clave (ej. Porvenir, Experis)
+    first_word = re.split(r'[\s\(\)_-]+', company.strip())[0]
+    candidate = f"CV_Santiago_Ochoa_{first_word}.pdf" if doc_type == "CV" else f"Cover_Letter_{first_word}.pdf"
+    if candidate in files:
+        return candidate
+
+    return None
 
 def init_db():
     conn = sqlite3.connect(DB_PATH)
@@ -109,12 +131,12 @@ def export_dashboard() -> str:
         }
         status_badge = f'<span class="badge {status_classes.get(status, "badge-secondary")}">{status}</span>'
 
-        safe_comp = "".join(c for c in a["company"] if c.isalnum() or c in (" ", "_", "-")).strip().replace(" ", "_")
-        pdf_file = f"CV_Santiago_Ochoa_{safe_comp}.pdf"
-        pdf_full_path = os.path.join(output_dir, pdf_file)
+        cv_file = resolve_document_file(output_dir, a["company"], "CV")
+        cl_file = resolve_document_file(output_dir, a["company"], "Cover_Letter")
         
-        pdf_button = f'<a href="{pdf_file}" target="_blank" class="btn btn-sm btn-outline">Ver CV PDF</a>' if os.path.exists(pdf_full_path) else '<span class="text-muted">—</span>'
-        apply_button = f'<a href="{a["url"]}" target="_blank" class="btn btn-sm btn-primary">Ir a Oferta ↗</a>' if a.get("url") else '<span class="text-muted">—</span>'
+        cv_button = f'<a href="{cv_file}" target="_blank" class="btn btn-sm btn-outline">📄 Ver CV</a>' if cv_file else '<span class="text-muted">—</span>'
+        cl_button = f'<a href="{cl_file}" target="_blank" class="btn btn-sm btn-outline">✉️ Carta</a>' if cl_file else ''
+        apply_button = f'<a href="{a["url"]}" target="_blank" class="btn btn-sm btn-primary">🌐 Oferta ↗</a>' if a.get("url") else '<span class="text-muted">—</span>'
 
         rows_html.append(f"""
         <tr>
@@ -125,7 +147,7 @@ def export_dashboard() -> str:
             <td>{badge_score}</td>
             <td>{status_badge}</td>
             <td class="text-muted">{a.get('date_added', '')[:10]}</td>
-            <td>{apply_button} {pdf_button}</td>
+            <td style="white-space: nowrap;">{apply_button} {cv_button} {cl_button}</td>
         </tr>
         """)
 
@@ -276,7 +298,7 @@ def export_dashboard() -> str:
                     <th>Fit Score</th>
                     <th>Estado</th>
                     <th>Fecha</th>
-                    <th>Acciones</th>
+                    <th style="min-width: 270px;">Documentos & Acciones</th>
                 </tr>
             </thead>
             <tbody>
