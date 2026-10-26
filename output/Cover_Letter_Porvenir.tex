@@ -1,0 +1,91 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=0.7in, top=0.6in, bottom=0.6in]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{charter}
+\usepackage{fontawesome5}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{microtype}
+
+\definecolor{accent}{HTML}{1E3A5F}     % Professional Dark Navy
+\definecolor{accentblue}{HTML}{2B6CB0} % Slate Blue
+\definecolor{lightgray}{HTML}{F3F4F6}
+\definecolor{darktext}{HTML}{1F2937}
+\definecolor{bulletline}{HTML}{9CA3AF}
+\definecolor{subtletext}{HTML}{4B5563}
+
+\hypersetup{colorlinks=true, linkcolor=accentblue, urlcolor=accentblue}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{8pt}
+
+\begin{document}
+\thispagestyle{empty}
+\color{darktext}
+
+% Encabezado idéntico al CV
+\begin{center}
+    {\Huge \bfseries\color{accent} SANTIAGO ALEJANDRO OCHOA QUESADA} \\[6pt]
+    {\small\color{darktext}
+    \faEnvelope\ \href{mailto:santy.alejo4@gmail.com}{santy.alejo4@gmail.com}
+    \quad\textcolor{bulletline}{\textbar}\quad
+    \faPhone\ +57 320 351 7153
+    \quad\textcolor{bulletline}{\textbar}\quad
+    \faMapMarker*\ Bogotá, Colombia \\[4pt]
+    \faLinkedin\ \href{https://linkedin.com/in/santiago-alejandro-ochoa-quesada-a07a18288/}{LinkedIn}
+    \quad\textcolor{bulletline}{\textbar}\quad
+    \faGithub\ \href{https://github.com/Sochoaq}{GitHub}
+    }
+\end{center}
+\vspace{2pt}
+{\color{bulletline}\hrule height 0.8pt}
+\vspace{10pt}
+
+% Metadatos de la carta
+\noindent
+\begin{minipage}[t]{0.62\textwidth}
+    \textbf{\color{accent} Para:}\\
+    Dirección de Datos y Analítica \& Equipo de Selección\\
+    \textbf{Porvenir Pensiones y Cesantías} (Grupo Aval)\\
+    Bogotá, Colombia
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.35\textwidth}\raggedleft
+    \textbf{\color{accent} Fecha:}\\
+    26 de octubre de 2026
+\end{minipage}
+
+\vspace{6pt}
+\noindent
+{\large\bfseries\color{accent} Asunto: Postulación al cargo de Ingeniero/a de Desarrollo IA}
+\vspace{2pt}
+
+\noindent Estimado Equipo de Selección y Dirección de Datos y Analítica de Porvenir,
+
+Me dirijo a ustedes con gran entusiasmo para presentar mi postulación a la posición de \textbf{Ingeniero/a de Desarrollo IA}. Como Ingeniero Electrónico de la \textbf{Universidad Nacional de Colombia} (promedio 4.6/5.0) y actual \textbf{Ingeniero de Proyectos} en AM4, combino un sólido pensamiento matemático y computacional con experiencia práctica en el desarrollo de agentes inteligentes basados en LLMs, arquitecturas RAG y soluciones de backend en Python para automatización empresarial.
+
+A lo largo de mi trayectoria técnica en ingeniería de software e inteligencia artificial aplicada, he consolidado capacidades clave que se alinean con la misión de Porvenir:
+
+\begin{itemize}[label={\color{accentblue}\raisebox{0.2ex}{\tiny\faCircle}}, leftmargin=1.4em, itemsep=3pt, parsep=0pt, topsep=2pt]
+    \item \textbf{Agentes Inteligentes y Copilots:} Desarrollo de flujos agénticos basados en Large Language Models con orquestación mediante LangChain, integrando ejecución dinámica de herramientas (\textit{tool calling}) y consumo de servicios corporativos.
+    \item \textbf{Arquitecturas RAG y Prompt Engineering:} Implementación de pipelines de recuperación aumentada contextual con indexación vectorial y búsqueda semántica sobre repositorios documentales, aplicando técnicas avanzadas de prompt engineering y guardrails de seguridad.
+    \item \textbf{Integración Empresarial y APIs:} Construcción de microservicios y APIs REST con FastAPI, modelado relacional en SQL y conexión robusta con bases de datos y sistemas corporativos.
+    \item \textbf{Testing, Calidad y Despliegue:} Pruebas automatizadas (QA con Pytest), contenedorización con Docker y flujos CI/CD con GitHub Actions, garantizando una confiabilidad del 98\% en entornos de alta exigencia.
+\end{itemize}
+
+Cuento con nivel de \textbf{inglés profesional B2}, residencia permanente en Bogotá con total disponibilidad presencial e híbrida, y una alta motivación para sumarme a una organización referente como Porvenir y el Grupo Aval, colaborando activamente con las áreas de negocio para materializar soluciones de IA de alto impacto.
+
+Agradezco de antemano el tiempo dedicado a revisar mi postulación y quedo a su entera disposición para conversar en una entrevista técnica.
+
+\vspace{10pt}
+\noindent Cordialmente,
+
+\vspace{12pt}
+\noindent
+\textbf{\large\color{accent} Santiago Alejandro Ochoa Quesada}\\
+{\small\color{subtletext} Ingeniero Electrónico | AI Engineering \& Software}\\
+{\footnotesize\color{subtletext} santy.alejo4@gmail.com \;\textbar\; +57 320 351 7153 \;\textbar\; Bogotá, Colombia}
+
+\end{document}

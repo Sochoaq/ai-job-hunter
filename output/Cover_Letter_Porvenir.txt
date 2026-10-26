@@ -1,0 +1,21 @@
+Estimado Equipo de Selección y Dirección de Datos y Analítica de Porvenir,
+
+Me dirijo a ustedes con gran entusiasmo para presentar mi postulación a la posición de Ingeniero/a de Desarrollo IA. Como Ingeniero Electrónico de la Universidad Nacional de Colombia (promedio 4.6/5.0) y actual Ingeniero de Proyectos en AM4, combino un sólido pensamiento matemático y computacional con experiencia práctica en el desarrollo de agentes inteligentes basados en LLMs, arquitecturas RAG y soluciones de backend en Python para automatización empresarial.
+
+A lo largo de mi trayectoria técnica en ingeniería de software e inteligencia artificial aplicada, he consolidado capacidades clave que se alinean con la misión de Porvenir:
+• Agentes Inteligentes y Copilots: Desarrollo de flujos agénticos basados en Large Language Models con orquestación mediante LangChain, integrando ejecución dinámica de herramientas (tool calling) y consumo de servicios corporativos.
+• Arquitecturas RAG y Prompt Engineering: Implementación de pipelines de recuperación aumentada contextual con indexación vectorial y búsqueda semántica sobre repositorios documentales, aplicando técnicas avanzadas de prompt engineering y guardrails de seguridad.
+• Integración Empresarial y APIs: Construcción de microservicios y APIs REST con FastAPI, modelado relacional en SQL y conexión robusta con bases de datos y sistemas corporativos.
+• Testing, Calidad y Puesta en Producción: Pruebas automatizadas (QA con Pytest), contenedorización con Docker y pipelines CI/CD con GitHub Actions, garantizando una confiabilidad del 98% en entornos de alta exigencia.
+
+Cuento con nivel de inglés profesional B2, residencia permanente en Bogotá con total disponibilidad presencial e híbrida, y una alta motivación para sumarme a una organización referente como Porvenir y el Grupo Aval, colaborando activamente con las áreas de negocio para materializar soluciones de IA de alto impacto.
+
+Agradezco de antemano el tiempo dedicado a revisar mi postulación y quedo a su entera disposición para conversar en una entrevista técnica.
+
+Atentamente,
+
+Santiago Alejandro Ochoa Quesada
+Ingeniero Electrónico | AI Engineering & Software
+santy.alejo4@gmail.com | +57 320 351 7153 | Bogotá, Colombia
+LinkedIn: https://linkedin.com/in/santiago-alejandro-ochoa-quesada-a07a18288/
+GitHub: https://github.com/Sochoaq
