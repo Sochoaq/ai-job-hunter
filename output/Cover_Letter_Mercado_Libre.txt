@@ -1,0 +1,16 @@
+Estimado equipo de Selección de Mercado Libre,
+
+Me dirijo a ustedes con gran entusiasmo para postularme al rol de Artificial Intelligence Engineer en Bogotá. Como Ingeniero Electrónico graduado de la Universidad Nacional de Colombia con un GPA de 4.6/5.0, poseo una sólida base matemática y científica, combinada con experiencia práctica en el desarrollo de software robusto, procesamiento de datos y algoritmos avanzados en Python. 
+
+A lo largo de mi trayectoria en AM4, he liderado el diseño y la implementación de sistemas inteligentes, automatizaciones industriales y arquitecturas de backend orientadas al análisis en tiempo real y la toma de decisiones basada en datos. Mi experiencia abarca desde el procesamiento de señales (DSP) y la visión artificial hasta la contenerización con Docker y la construcción de APIs escalables, garantizando siempre altos estándares de calidad, baja latencia y optimización de recursos. 
+
+Me motiva profundamente el propósito de Mercado Libre de democratizar el comercio electrónico y los servicios financieros en América Latina a través de la tecnología. Estoy convencido de que mi capacidad analítica, mi rapidez de aprendizaje y mi pasión por la ingeniería de inteligencia artificial me permitirán aportar valor inmediato en el diseño, experimentación y escalado de sistemas innovadores y seguros. 
+
+Agradezco de antemano su tiempo al considerar mi postulación y espero tener la oportunidad de conversar pronto sobre cómo mis competencias técnicas pueden contribuir al éxito de sus próximos desafíos tecnológicos.
+
+Atentamente,
+Santiago Alejandro Ochoa Quesada
+Ingeniero Electrónico | Universidad Nacional de Colombia
+Tel: +57 320 351 7153 | santy.alejo4@gmail.com
+LinkedIn: linkedin.com/in/santiago-alejandro-ochoa-quesada-a07a18288
+GitHub: github.com/Sochoaq

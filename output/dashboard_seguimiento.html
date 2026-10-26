@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Tracker Dashboard - Santiago Ochoa Quesada</title>
+    <style>
+        :root {
+            --bg: #0F172A;
+            --card-bg: #1E293B;
+            --text: #F8FAFC;
+            --text-muted: #94A3B8;
+            --primary: #38BDF8;
+            --primary-hover: #0EA5E9;
+            --success: #34D399;
+            --warning: #FBBF24;
+            --danger: #F87171;
+            --border: #334155;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            padding: 2rem;
+            line-height: 1.5;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 1.5rem;
+        }
+        .header h1 { font-size: 1.8rem; font-weight: 700; color: #FFF; }
+        .header p { color: var(--text-muted); font-size: 0.95rem; margin-top: 0.2rem; }
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.2rem;
+            margin-bottom: 2rem;
+        }
+        .metric-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.2rem 1.5rem;
+        }
+        .metric-card .title { font-size: 0.85rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; }
+        .metric-card .val { font-size: 2rem; font-weight: 700; margin-top: 0.3rem; color: #FFF; }
+        .table-container {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow-x: auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 0.92rem;
+        }
+        th {
+            background: #182234;
+            padding: 1rem 1.2rem;
+            color: var(--text-muted);
+            font-weight: 600;
+            border-bottom: 1px solid var(--border);
+        }
+        td {
+            padding: 1rem 1.2rem;
+            border-bottom: 1px solid var(--border);
+            vertical-align: middle;
+        }
+        tr:hover td { background: rgba(255, 255, 255, 0.02); }
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.6rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        .badge-success { background: rgba(52, 211, 153, 0.15); color: #34D399; border: 1px solid rgba(52, 211, 153, 0.3); }
+        .badge-primary { background: rgba(56, 189, 248, 0.15); color: #38BDF8; border: 1px solid rgba(56, 189, 248, 0.3); }
+        .badge-warning { background: rgba(251, 191, 36, 0.15); color: #FBBF24; border: 1px solid rgba(251, 191, 36, 0.3); }
+        .badge-info { background: rgba(96, 165, 250, 0.15); color: #60A5FA; border: 1px solid rgba(96, 165, 250, 0.3); }
+        .badge-track { background: rgba(148, 163, 184, 0.1); color: #CBD5E1; border: 1px solid rgba(148, 163, 184, 0.2); }
+        .btn {
+            display: inline-block;
+            text-decoration: none;
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            margin-right: 0.3rem;
+        }
+        .btn-primary { background: var(--primary); color: #0F172A; }
+        .btn-primary:hover { background: var(--primary-hover); }
+        .btn-outline { border: 1px solid var(--border); color: var(--text); background: transparent; }
+        .btn-outline:hover { background: rgba(255, 255, 255, 0.05); border-color: var(--text-muted); }
+        .text-muted { color: var(--text-muted); }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div>
+            <h1>Dashboard de Postulaciones Laborales</h1>
+            <p>Santiago Alejandro Ochoa Quesada &bull; Ingeniero de Proyectos | AI, Cloud & Hardware Systems</p>
+        </div>
+        <div>
+            <span class="badge badge-primary">SQLite: job_tracker.db</span>
+        </div>
+    </div>
+
+    <div class="metrics-grid">
+        <div class="metric-card">
+            <div class="title">Total Vacantes Preparadas</div>
+            <div class="val">8</div>
+        </div>
+        <div class="metric-card">
+            <div class="title">Afinidad Promedio</div>
+            <div class="val" style="color: var(--success);">90.2%</div>
+        </div>
+        <div class="metric-card">
+            <div class="title">Listas para Aplicar</div>
+            <div class="val" style="color: var(--warning);">8</div>
+        </div>
+        <div class="metric-card">
+            <div class="title">En Proceso / Entrevistas</div>
+            <div class="val">0</div>
+        </div>
+    </div>
+
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Empresa</th>
+                    <th>Cargo</th>
+                    <th>Track</th>
+                    <th>Fit Score</th>
+                    <th>Estado</th>
+                    <th>Fecha</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+        <tr>
+            <td><strong>#8</strong></td>
+            <td><strong>Bancolombia</strong></td>
+            <td>Ingeniero/a Software Nivel 1 (Junior) - Servicios Transversales Y Admi</td>
+            <td><span class="badge badge-track">CLOUD_DEVOPS</span></td>
+            <td><span class="badge badge-success">90% MATCH</span></td>
+            <td><span class="badge badge-warning">PENDING_REVIEW</span></td>
+            <td class="text-muted">2026-10-26</td>
+            <td><a href="https://empleo.grupobancolombia.com/bancolombia/job/Etipani-Ingenieroa-Software-Nivel-1-%28Junior%29-L%C3%ADnea-de-Conocimiento-Foco-Servicios-Transversales-Y-Admi-COL/1442532900/?locale=es_ES" target="_blank" class="btn btn-sm btn-primary">Ir a Oferta ↗</a> <a href="CV_Santiago_Ochoa_Bancolombia.pdf" target="_blank" class="btn btn-sm btn-outline">Ver CV PDF</a></td>
+        </tr>
+        
+        <tr>
+            <td><strong>#7</strong></td>
+            <td><strong>Bancolombia</strong></td>
+            <td>Ingeniero/a Software (Nivel 1 - Junior) - Integración Datos Y Archivos TI</td>
+            <td><span class="badge badge-track">AI_ENGINEERING</span></td>
+            <td><span class="badge badge-success">96% MATCH</span></td>
+            <td><span class="badge badge-warning">PENDING_REVIEW</span></td>
+            <td class="text-muted">2026-10-26</td>
+            <td><a href="https://empleo.grupobancolombia.com/bancolombia/job/Etipani-IngenieroA-Software-%28Nivel-1-Junior%29-L%C3%ADnea-De-Conocimiento-Foco-Integraci%C3%B3n-Datos-Y-Archivos-TI-COL/1443383900/?locale=es_ES" target="_blank" class="btn btn-sm btn-primary">Ir a Oferta ↗</a> <a href="CV_Santiago_Ochoa_Bancolombia.pdf" target="_blank" class="btn btn-sm btn-outline">Ver CV PDF</a></td>
+        </tr>
+        
+        <tr>
+            <td><strong>#6</strong></td>
+            <td><strong>Resolv Global</strong></td>
+            <td>Junior AI/ML Engineer</td>
+            <td><span class="badge badge-track">AI_ENGINEERING</span></td>
+            <td><span class="badge badge-success">94% MATCH</span></td>
+            <td><span class="badge badge-warning">PENDING_REVIEW</span></td>
+            <td class="text-muted">2026-10-23</td>
+            <td><a href="https://co.linkedin.com/jobs/view/junior-ai-ml-engineer-at-resolv-global-4481166962" target="_blank" class="btn btn-sm btn-primary">Ir a Oferta ↗</a> <a href="CV_Santiago_Ochoa_Resolv_Global.pdf" target="_blank" class="btn btn-sm btn-outline">Ver CV PDF</a></td>
+        </tr>
+        
+        <tr>
+            <td><strong>#5</strong></td>
+            <td><strong>Experis Colombia</strong></td>
+            <td>Ingeniero de Inteligencia Artificial</td>
+            <td><span class="badge badge-track">AI_ENGINEERING</span></td>
+            <td><span class="badge badge-success">92% MATCH</span></td>
+            <td><span class="badge badge-warning">PENDING_REVIEW</span></td>
+            <td class="text-muted">2026-10-23</td>
+            <td><a href="https://co.linkedin.com/jobs/view/ingeniero-de-inteligencia-artificial-at-experis-colombia-4483113004" target="_blank" class="btn btn-sm btn-primary">Ir a Oferta ↗</a> <span class="text-muted">—</span></td>
+        </tr>
+        
+        <tr>
+            <td><strong>#4</strong></td>
+            <td><strong>Mercado Libre</strong></td>
+            <td>Artificial Intelligence Engineer</td>
+            <td><span class="badge badge-track">AI_ENGINEERING</span></td>
+            <td><span class="badge badge-success">88% MATCH</span></td>
+            <td><span class="badge badge-warning">PENDING_REVIEW</span></td>
+            <td class="text-muted">2026-10-23</td>
+            <td><a href="https://co.linkedin.com/jobs/view/artificial-intelligence-engineer-at-mercado-libre-4469794329" target="_blank" class="btn btn-sm btn-primary">Ir a Oferta ↗</a> <a href="CV_Santiago_Ochoa_Mercado_Libre.pdf" target="_blank" class="btn btn-sm btn-outline">Ver CV PDF</a></td>
+        </tr>
+        
+        <tr>
+            <td><strong>#3</strong></td>
+            <td><strong>Alfa Laval</strong></td>
+            <td>Project Execution Engineer</td>
+            <td><span class="badge badge-track">HARDWARE_EMBEDDED</span></td>
+            <td><span class="badge badge-success">92% MATCH</span></td>
+            <td><span class="badge badge-warning">PENDING_REVIEW</span></td>
+            <td class="text-muted">2026-10-22</td>
+            <td><a href="https://co.linkedin.com/jobs/view/project-execution-engineer-at-alfa-laval-4479549106" target="_blank" class="btn btn-sm btn-primary">Ir a Oferta ↗</a> <a href="CV_Santiago_Ochoa_Alfa_Laval.pdf" target="_blank" class="btn btn-sm btn-outline">Ver CV PDF</a></td>
+        </tr>
+        
+        <tr>
+            <td><strong>#2</strong></td>
+            <td><strong>IBM</strong></td>
+            <td>Technical Consultant - TDR - Threat Responder</td>
+            <td><span class="badge badge-track">CLOUD_DEVOPS</span></td>
+            <td><span class="badge badge-success">85% MATCH</span></td>
+            <td><span class="badge badge-warning">PENDING_REVIEW</span></td>
+            <td class="text-muted">2026-10-22</td>
+            <td><a href="https://co.linkedin.com/jobs/view/technical-consultant-tdr-threat-responder-at-ibm-4477735976" target="_blank" class="btn btn-sm btn-primary">Ir a Oferta ↗</a> <a href="CV_Santiago_Ochoa_IBM.pdf" target="_blank" class="btn btn-sm btn-outline">Ver CV PDF</a></td>
+        </tr>
+        
+        <tr>
+            <td><strong>#1</strong></td>
+            <td><strong>Quala</strong></td>
+            <td>Ingeniero de Proyectos de Seguridad Tecnológica</td>
+            <td><span class="badge badge-track">CLOUD_DEVOPS</span></td>
+            <td><span class="badge badge-success">85% MATCH</span></td>
+            <td><span class="badge badge-warning">PENDING_REVIEW</span></td>
+            <td class="text-muted">2026-10-22</td>
+            <td><a href="https://quala.com.co / Teamtailor / beBee" target="_blank" class="btn btn-sm btn-primary">Ir a Oferta ↗</a> <a href="CV_Santiago_Ochoa_Quala.pdf" target="_blank" class="btn btn-sm btn-outline">Ver CV PDF</a></td>
+        </tr>
+        
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

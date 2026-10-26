@@ -1,0 +1,181 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=0.55in, top=0.5in, bottom=0.5in]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{charter}
+\usepackage{fontawesome5}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{tikz}
+\usepackage{hyperref}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins, breakable}
+\usepackage{microtype}
+
+\definecolor{headerbg}{HTML}{FFFFFF}
+\definecolor{accent}{HTML}{1E3A5F}     % Professional Dark Navy
+\definecolor{accentblue}{HTML}{2B6CB0} % Slate Blue
+\definecolor{lightgray}{HTML}{F3F4F6}
+\definecolor{darktext}{HTML}{1F2937}
+\definecolor{skillbg}{HTML}{374151}
+\definecolor{bulletline}{HTML}{9CA3AF}
+\definecolor{subtletext}{HTML}{4B5563}
+
+\hypersetup{colorlinks=true, linkcolor=accentblue, urlcolor=accentblue}
+
+\titleformat{\section}{\large\bfseries\color{accent}}{}{0em}{}[\vspace{1pt}\titlerule]
+\titlespacing{\section}{0pt}{11pt}{7pt}
+
+\newtcbox{\skillbadge}{
+    on line, box align=base,
+    colback=skillbg, colframe=skillbg,
+    colupper=white,
+    fontupper=\small\bfseries,
+    arc=4pt, boxrule=0pt,
+    left=6pt, right=6pt, top=3pt, bottom=3pt,
+    boxsep=0pt
+}
+
+% Caja de entrada de experiencia con borde izquierdo elegante y continuo
+\newtcolorbox{timelineentry}{
+    blanker,
+    breakable,
+    borderline west={1.5pt}{0pt}{bulletline},
+    left=1.2em,
+    top=0pt,
+    bottom=0pt,
+    before skip=0.8ex,
+    after skip=2.6ex
+}
+
+\newcommand{\cventry}[5]{%
+  \noindent
+  \begin{minipage}{\textwidth}
+    \vspace{0pt}%
+    \tikz[baseline=-0.7ex]{\node[draw=accent, fill=white, circle, inner sep=2.5pt, line width=1.5pt] {};}%
+    \hspace{0.5em}%
+    {\large\bfseries\color{accent} #1}%
+    \hfill{\small\bfseries\color{accentblue} #4}\par
+    \vspace{0.2ex}%
+    \hspace{1.5em}{\normalsize\bfseries\color{darktext} #2}%
+    \hfill{\small\color{subtletext}\textit{#3}}\par
+  \end{minipage}\par
+  \vspace{0.4ex}%
+  \begin{timelineentry}
+    \small\color{darktext}
+    \begin{itemize}[label={\color{accentblue}\raisebox{0.2ex}{\tiny\faCircle}}, leftmargin=1.2em, itemsep=0.4ex, parsep=0pt, topsep=0pt, partopsep=0pt]
+      #5
+    \end{itemize}
+  \end{timelineentry}
+}
+
+\begin{document}
+\thispagestyle{empty}
+\color{darktext}
+
+% Encabezado
+\begin{center}
+    {\Huge \bfseries\color{accent} SANTIAGO ALEJANDRO OCHOA QUESADA} \\[6pt]
+    {\small\color{darktext}
+    \faEnvelope\ \href{mailto:santy.alejo4@gmail.com}{santy.alejo4@gmail.com}
+    \quad\textcolor{bulletline}{\textbar}\quad
+    \faPhone\ +57 320 351 7153
+    \quad\textcolor{bulletline}{\textbar}\quad
+    \faMapMarker*\ Bogotá, Colombia \\[4pt]
+    \faLinkedin\ \href{https://linkedin.com/in/santiago-alejandro-ochoa-quesada-a07a18288/}{LinkedIn}
+    \quad\textcolor{bulletline}{\textbar}\quad
+    \faGithub\ \href{https://github.com/Sochoaq}{GitHub}
+    }
+\end{center}
+\vspace{4pt}
+
+\section{Perfil Profesional}
+\textbf{Ingeniero Electrónico} de la Universidad Nacional de Colombia (promedio 4.6/5.0) y actual \textbf{Ingeniero de Proyectos} en AM4. Especializado en ingeniería de software, integración de datos (ETL), desarrollo backend en Python y gestión de bases de datos SQL. Experiencia en el ciclo de vida completo de aplicaciones, diseño de APIs REST, contenedores Docker, pruebas automatizadas (QA) y modelos analíticos de Machine Learning. Con sólida formación en redes, ciberseguridad e infraestructura bajo estándares de alta disponibilidad, resiliencia y marcos de trabajo ágiles. Nivel de inglés profesional B2.
+
+\section{Experiencia Profesional}
+
+\cventry{Ingeniero de Proyectos (Software y Automatización)}{AM4}{Bogotá}{04/2026 - Actualidad}
+{
+    \item Diseño, desarrollo e implementación de flujos automatizados de integración de datos (ETL) en Python y SQL para la captura, limpieza y transformación de archivos y telemetrías operativas.
+    \item Construcción de microservicios y APIs REST para conectar fuentes de datos heterogéneas, bases de datos relacionales y módulos analíticos de procesamiento continuo.
+    \item Implementación de buenas prácticas de ingeniería de software, arquitectura de datos y modelado entidad-relación, asegurando consistencia y trazabilidad de los flujos.
+    \item Ejecución de pruebas unitarias y validación funcional (QA con Pytest), alcanzando un 98\% de confiabilidad operativa en implementaciones críticas para clientes industriales (Refoenergy, Brinsa, Geopark).
+    \item Contenedorización de aplicaciones y servicios mediante Docker, facilitando el despliegue estandarizado, la observabilidad y la estabilidad operativa.
+    \item Documentación técnica integral de sistemas: diagramas de casos de uso, especificación de APIs, modelos de datos y reportes de desempeño operativo.
+    \item Participación activa en la resolución de anomalías, soporte técnico y coordinación de entregables técnicos bajo metodologías colaborativas e iterativas.
+}
+
+\cventry{Auxiliar Estudiantil}{Universidad Nacional de Colombia}{Bogotá}{07/2024 - 11/2025}
+{
+    \item Apoyo en laboratorios de ingeniería mediante simulación computacional, programación de algoritmos y análisis y validación de datos experimentales.
+    \item Preparación de registros, verificación de instrumentación técnica y protocolos de medición para asegurar la consistencia y calidad de la información.
+    \item Acompañamiento a estudiantes en diagnóstico de fallas, depuración de software y resolución estructurada de problemas analíticos.
+    \item Elaboración de guías técnicas, documentación y reportes de prácticas estandarizadas para asegurar la trazabilidad del conocimiento.
+}
+
+\section{Educación}
+
+\cventry{Ingeniería Electrónica}{Universidad Nacional de Colombia}{Bogotá}{02/2021 - 11/2025}
+{
+    \item \textbf{Promedio académico: 4.6 / 5.0} (Graduado con Mérito Académico).
+    \item Formación sólida en sistemas computacionales, análisis numérico, procesamiento de datos, comunicaciones, automatización y control.
+    \item Desarrollo de proyectos de ingeniería orientados a algoritmos aplicados, integración de software y hardware, y modelado matemático.
+}
+
+\newpage
+
+\section{Proyectos Relevantes}
+
+\cventry{Pipelines de Integración de Datos \& Machine Learning}{Python, SQL \& Analítica}{Bogotá}{2026}
+{
+    \item Desarrollo de un motor modular para la ingestión, transformación (ETL) y almacenamiento estructurado de datos masivos y archivos multi-formato, optimizando tiempos de consulta en un 35\%.
+    \item Integración de modelos predictivos de Machine Learning y procesamiento estadístico para la detección temprana de inconsistencias y anomalías operativas.
+    \item Construcción de endpoints REST para consulta segura de datos, control de versiones y generación automática de reportes analíticos con trazabilidad integral.
+}
+
+\cventry{DPS Analyzer \& Metrology Platform (Sistemas y Resiliencia)}{AM4}{Bogotá}{2026}
+{
+    \item Suite de telemetría y diagnóstico para infraestructura crítica: captura de señales a 50 kHz, procesamiento FFT y evaluación de índices operativos bajo estándares internacionales.
+    \item Contenedorización completa con Docker y automatización del pipeline de construcción y pruebas CI/CD mediante GitHub Actions, garantizando despliegues repetibles y confiables.
+    \item Implementación de esquemas de persistencia en bases de datos relacionales SQL, monitoreo de métricas operativas y paneles de visualización interactivos.
+}
+
+\section{Habilidades}
+\begin{tcolorbox}[colback=lightgray, colframe=lightgray, boxrule=0pt, arc=6pt, left=10pt, right=10pt, top=10pt, bottom=10pt]
+\noindent
+\linespread{1.8}\selectfont
+\skillbadge{Python (Intermedio/Avanzado)}
+\skillbadge{SQL \& Modelado Relacional}
+\skillbadge{Pipelines de Datos (ETL)}
+\skillbadge{FastAPI / REST APIs}
+\skillbadge{Docker \& Contenedores}
+\skillbadge{AWS (EC2, S3, IAM, Lambda)}
+\skillbadge{Pruebas QA \& Pytest}
+\skillbadge{Machine Learning Aplicado}
+\skillbadge{Git \& GitHub Actions CI/CD}
+\skillbadge{Linux SysAdmin}
+\skillbadge{Redes \& Cisco CCNA}
+\skillbadge{Ciberseguridad \& Ethical Hacking}
+\skillbadge{Metodologías Ágiles (Scrum)}
+\skillbadge{Resolución de Problemas}
+\skillbadge{Trabajo Colaborativo}
+\end{tcolorbox}
+
+\section{Idiomas}
+\begin{itemize}[label={}, leftmargin=0.3cm, itemsep=6pt]
+    \item \textbf{Español} \hfill Nativo \quad \textcolor{accent}{\faCircle \faCircle \faCircle \faCircle \faCircle}
+    \item \textbf{Inglés} \hfill B2 (Profesional de Trabajo / Intermedio) \quad \textcolor{accent}{\faCircle \faCircle \faCircle \faCircle} \textcolor{bulletline}{\faCircle}
+    \item \textbf{Francés} \hfill A2 \quad \textcolor{accent}{\faCircle \faCircle} \textcolor{bulletline}{\faCircle \faCircle \faCircle}
+\end{itemize}
+
+\section{Certificaciones}
+\begin{itemize}[label={\color{accentblue}\faAward}, leftmargin=0.6cm, itemsep=6pt]
+    \item \textbf{Ethical Hacking \& Cybersecurity} --- Cisco Networking Academy \hfill \textit{04/2026}
+    \item \textbf{CCNA: Introduction to Networks} --- Cisco Networking Academy \hfill \textit{07/2025}
+    \item \textbf{Análisis Computacional de Datos Ambientales} --- Universidad Nacional de Colombia \hfill \textit{09/2025}
+    \item \textbf{Introducción a la Fotónica Integrada y las Comunicaciones Cuánticas} --- UNAL \hfill \textit{07/2024}
+    \item \textbf{Python Intermedio} --- SoloLearn \hfill \textit{03/2021}
+\end{itemize}
+
+\end{document}

@@ -1,0 +1,17 @@
+Estimado Equipo de Selección de Experis Colombia (ManpowerGroup),
+
+Me dirijo a ustedes para presentar mi postulación a la posición de Ingeniero de Inteligencia Artificial (Databricks / GenAI). Como Ingeniero Electrónico de la Universidad Nacional de Colombia (promedio de 4.6/5.0) y actual Ingeniero de Proyectos en AM4, cuento con una sólida formación en analítica computacional, desarrollo en Python y arquitectura de soluciones inteligentes orientadas a resolver desafíos operativos reales de negocio.
+
+En mi experiencia técnica y proyectos aplicados, he diseñado e implementado soluciones de Inteligencia Artificial Generativa, arquitecturas RAG (Retrieval-Augmented Generation) para la indexación y consulta contextual de grandes repositorios de datos, así como el desarrollo de agentes autónomos con ejecución de herramientas y consumo de APIs REST. Asimismo, domino el procesamiento analítico de grandes volúmenes de datos e integración en plataformas como Databricks, combinando prácticas de MLOps, monitoreo de rendimiento y despliegues contenerizados con Docker y flujos CI/CD para asegurar confiabilidad y gobierno en producción.
+
+Cuento con un nivel de inglés B2 (profesional y fluido para colaboración técnica internacional), residencia en Bogotá con total disponibilidad de trabajo flexible/híbrido y una mentalidad orientada a la entrega rigurosa, el cumplimiento de hitos y la comunicación clara con stakeholders.
+
+Me motiva enormemente sumarme al equipo de Experis y ManpowerGroup para liderar la adopción de tecnologías de IA Generativa de alto impacto. Quedo a su entera disposición para conversar en detalle sobre cómo mi perfil técnico puede aportar valor desde el primer día.
+
+Atentamente,
+
+Santiago Alejandro Ochoa Quesada
+Ingeniero Electrónico | AI Engineering & Software
+santy.alejo4@gmail.com | +57 320 351 7153 | Bogotá, Colombia
+LinkedIn: https://linkedin.com/in/santiago-alejandro-ochoa-quesada-a07a18288/
+GitHub: https://github.com/Sochoaq

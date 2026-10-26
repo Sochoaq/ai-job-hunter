@@ -1,0 +1,12 @@
+Estimado Hiring Manager de Alfa Laval,
+
+Me dirijo a usted con gran entusiasmo para postularme a la posición de Project Execution Engineer. Como Ingeniero Electrónico egresado de la Universidad Nacional de Colombia con un promedio sobresaliente de 4.6/5.0, poseo una sólida base técnica combinada con experiencia práctica en la gestión, automatización y ejecución de proyectos industriales de alta exigencia.
+
+Actualmente me desempeño como Ingeniero de Proyectos en AM4, donde lidero el ciclo de vida de soluciones tecnológicas para clientes industriales de primer nivel como Geopark, Refoenergy y Brinsa. Mi rol abarca desde la captura y validación de variables de telemetría operativa mediante Python y C/C++ hasta la coordinación de entregables, aseguramiento de calidad (QA) y resolución de inconsistencias en sistemas de campo. Esta trayectoria me ha dotado de una visión integral para gestionar la ejecución técnica, supervisar montajes, coordinar puestas en marcha y asegurar una comunicación fluida y efectiva con clientes y equipos multidisciplinarios.
+
+Alfa Laval es reconocida globalmente por su excelencia en ingeniería y optimización de procesos industriales, valores con los que me identifico plenamente. Estoy convencido de que mi capacidad analítica, rigor técnico y experiencia en instrumentación y automatización me permitirán aportar un valor inmediato a su equipo de ejecución de proyectos, garantizando entregas eficientes y alineadas con los más altos estándares de calidad.
+
+Agradezco de antemano su tiempo y consideración al revisar mi postulación, y espero tener la oportunidad de discutir cómo mi perfil puede contribuir al éxito de los próximos proyectos de Alfa Laval.
+
+Atentamente,
+Santiago Alejandro Ochoa Quesada

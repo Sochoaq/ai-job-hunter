@@ -1,0 +1,181 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=0.55in, top=0.5in, bottom=0.5in]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{charter}
+\usepackage{fontawesome5}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{tikz}
+\usepackage{hyperref}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins, breakable}
+\usepackage{microtype}
+
+\definecolor{headerbg}{HTML}{FFFFFF}
+\definecolor{accent}{HTML}{1E3A5F}     % Professional Dark Navy
+\definecolor{accentblue}{HTML}{2B6CB0} % Slate Blue
+\definecolor{lightgray}{HTML}{F3F4F6}
+\definecolor{darktext}{HTML}{1F2937}
+\definecolor{skillbg}{HTML}{374151}
+\definecolor{bulletline}{HTML}{9CA3AF}
+\definecolor{subtletext}{HTML}{4B5563}
+
+\hypersetup{colorlinks=true, linkcolor=accentblue, urlcolor=accentblue}
+
+\titleformat{\section}{\large\bfseries\color{accent}}{}{0em}{}[\vspace{1pt}\titlerule]
+\titlespacing{\section}{0pt}{11pt}{7pt}
+
+\newtcbox{\skillbadge}{
+    on line, box align=base,
+    colback=skillbg, colframe=skillbg,
+    colupper=white,
+    fontupper=\small\bfseries,
+    arc=4pt, boxrule=0pt,
+    left=6pt, right=6pt, top=3pt, bottom=3pt,
+    boxsep=0pt
+}
+
+% Timeline entry box with clean west borderline
+\newtcolorbox{timelineentry}{
+    blanker,
+    breakable,
+    borderline west={1.5pt}{0pt}{bulletline},
+    left=1.2em,
+    top=0pt,
+    bottom=0pt,
+    before skip=0.8ex,
+    after skip=2.6ex
+}
+
+\newcommand{\cventry}[5]{%
+  \noindent
+  \begin{minipage}{\textwidth}
+    \vspace{0pt}%
+    \tikz[baseline=-0.7ex]{\node[draw=accent, fill=white, circle, inner sep=2.5pt, line width=1.5pt] {};}%
+    \hspace{0.5em}%
+    {\large\bfseries\color{accent} #1}%
+    \hfill{\small\bfseries\color{accentblue} #4}\par
+    \vspace{0.2ex}%
+    \hspace{1.5em}{\normalsize\bfseries\color{darktext} #2}%
+    \hfill{\small\color{subtletext}\textit{#3}}\par
+  \end{minipage}\par
+  \vspace{0.4ex}%
+  \begin{timelineentry}
+    \small\color{darktext}
+    \begin{itemize}[label={\color{accentblue}\raisebox{0.2ex}{\tiny\faCircle}}, leftmargin=1.2em, itemsep=0.4ex, parsep=0pt, topsep=0pt, partopsep=0pt]
+      #5
+    \end{itemize}
+  \end{timelineentry}
+}
+
+\begin{document}
+\thispagestyle{empty}
+\color{darktext}
+
+% Header
+\begin{center}
+    {\Huge \bfseries\color{accent} SANTIAGO ALEJANDRO OCHOA QUESADA} \\[6pt]
+    {\small\color{darktext}
+    \faEnvelope\ \href{mailto:santy.alejo4@gmail.com}{santy.alejo4@gmail.com}
+    \quad\textcolor{bulletline}{\textbar}\quad
+    \faPhone\ +57 320 351 7153
+    \quad\textcolor{bulletline}{\textbar}\quad
+    \faMapMarker*\ Bogotá, Colombia \\[4pt]
+    \faLinkedin\ \href{https://linkedin.com/in/santiago-alejandro-ochoa-quesada-a07a18288/}{LinkedIn}
+    \quad\textcolor{bulletline}{\textbar}\quad
+    \faGithub\ \href{https://github.com/Sochoaq}{GitHub}
+    }
+\end{center}
+\vspace{4pt}
+
+\section{Professional Summary}
+High-performing \textbf{Electronic Engineer} from Universidad Nacional de Colombia (GPA 4.6/5.0) and current \textbf{Project Engineer} at AM4, specializing in AI Engineering, Python backend systems, and applied Machine Learning. Experienced in building conversational AI agents, RAG retrieval pipelines, tool calling orchestrations, and robust REST APIs. Proficient with Docker, SQL, cloud environments (Azure/AWS), CI/CD workflows, and model evaluation. Bilingual (Native Spanish, Professional Working English B2) and passionate about turning functional AI prototypes into secure, reliable production systems.
+
+\section{Professional Experience}
+
+\cventry{Project Engineer (Software \& AI Systems)}{AM4}{Bogotá, Colombia}{04/2026 - Present}
+{
+    \item Designed and developed Python automation pipelines for acquiring, validating, cleaning, and transforming multi-source operational telemetries and complex variables.
+    \item Built and integrated modular REST APIs and backend microservices connecting analytical models, relational databases (SQL), and user-facing dashboards.
+    \item Developed automated signal processing and anomaly detection algorithms, cutting diagnostic latency and ensuring high data fidelity.
+    \item Implemented MLOps workflows, automated unit/integration testing with Pytest, and containerization with Docker, achieving a 98\% operational reliability rate across critical industrial deployments.
+    \item Collaborated with cross-functional engineering teams to turn technical specifications and system prototypes into scalable, reliable production software.
+    \item Executed technical field validations and diagnostics on critical infrastructure for tier-1 industrial clients (Refoenergy, Brinsa, Geopark).
+    \item Supervised project deliverables, tracked sprint milestones, and delivered comprehensive technical reports and architecture documentation to stakeholders.
+}
+
+\cventry{Teaching \& Research Assistant}{Universidad Nacional de Colombia}{Bogotá, Colombia}{07/2024 - 11/2025}
+{
+    \item Supported advanced laboratory sessions in digital systems, signal processing, and experimental numerical simulations.
+    \item Guided students in troubleshooting algorithmic bugs, debugging software pipelines, and validating experimental electronic systems.
+    \item Prepared laboratory equipment, testing instrumentation, and measurement protocols to guarantee data consistency across sessions.
+    \item Authored technical guides, laboratory manuals, and benchmark reports to standardize experimental procedures and findings.
+}
+
+\section{Education}
+
+\cventry{B.S. in Electronic Engineering}{Universidad Nacional de Colombia}{Bogotá, Colombia}{02/2021 - 11/2025}
+{
+    \item \textbf{Academic GPA: 4.6 / 5.0} (Graduated with Academic Honors / Top Tier).
+    \item Rigorous coursework in Digital Signal Processing (DSP/FFT), Numerical Analysis, Automation, Digital Systems, and Communication Networks.
+    \item Executed comprehensive engineering capstone projects focusing on system simulation, algorithmic modeling, and hardware-software integration.
+}
+
+\newpage
+
+\section{Featured AI \& Software Projects}
+
+\cventry{Autonomous AI Agents \& RAG Architecture}{AI Engineering \& Python}{Bogotá, Colombia}{2026}
+{
+    \item Designed and developed production-ready conversational AI agents featuring tool calling, dynamic API consumption, and multi-turn state management.
+    \item Built scalable Retrieval-Augmented Generation (RAG) pipelines incorporating document chunking, semantic vector embeddings, and optimized hybrid retrieval.
+    \item Implemented LLM evaluation metrics, safety guardrails, and structured error handling to ensure high response accuracy and secure interactions.
+}
+
+\cventry{DPS Analyzer \& Metrology AI (Time-Series DSP \& MLOps)}{AM4}{Bogotá, Colombia}{2026}
+{
+    \item Engineered an end-to-end predictive diagnostic suite for high-voltage infrastructure: continuous 50 kHz signal ingestion, FFT harmonic analysis, and automated Health Index (HI\%) calculations adhering to IEEE/IEC standards.
+    \item Containerized system services with Docker and configured CI/CD automation via GitHub Actions for seamless continuous integration and deployment.
+    \item Built SQL data schemas, automated reporting engines, and diagnostic alert monitoring for mission-critical operations.
+}
+
+\section{Technical Skills}
+\begin{tcolorbox}[colback=lightgray, colframe=lightgray, boxrule=0pt, arc=6pt, left=10pt, right=10pt, top=10pt, bottom=10pt]
+\noindent
+\linespread{1.8}\selectfont
+\skillbadge{Python (Advanced)}
+\skillbadge{AI Agents \& Tool Calling}
+\skillbadge{RAG Pipelines}
+\skillbadge{LLM APIs (OpenAI / Azure)}
+\skillbadge{LangChain / LangGraph}
+\skillbadge{FastAPI \& REST APIs}
+\skillbadge{Docker Containerization}
+\skillbadge{SQL (PostgreSQL / SQLite)}
+\skillbadge{Git \& GitHub Actions CI/CD}
+\skillbadge{PyTorch \& Scikit-Learn}
+\skillbadge{Cloud (Azure / AWS)}
+\skillbadge{QA Testing (Pytest)}
+\skillbadge{Computer Vision}
+\skillbadge{Linux SysAdmin}
+\skillbadge{Cross-Functional Collaboration}
+\end{tcolorbox}
+
+\section{Languages}
+\begin{itemize}[label={}, leftmargin=0.3cm, itemsep=6pt]
+    \item \textbf{English} \hfill Professional Working Proficiency (B2) \quad \textcolor{accent}{\faCircle \faCircle \faCircle \faCircle} \textcolor{bulletline}{\faCircle}
+    \item \textbf{Spanish} \hfill Native \quad \textcolor{accent}{\faCircle \faCircle \faCircle \faCircle \faCircle}
+    \item \textbf{French} \hfill Elementary (A2) \quad \textcolor{accent}{\faCircle \faCircle} \textcolor{bulletline}{\faCircle \faCircle \faCircle}
+\end{itemize}
+
+\section{Certifications}
+\begin{itemize}[label={\color{accentblue}\faAward}, leftmargin=0.6cm, itemsep=6pt]
+    \item \textbf{Ethical Hacking \& Cybersecurity} --- Cisco Networking Academy \hfill \textit{04/2026}
+    \item \textbf{CCNA: Introduction to Networks} --- Cisco Networking Academy \hfill \textit{07/2025}
+    \item \textbf{Computational Environmental Data Analysis} --- Universidad Nacional de Colombia \hfill \textit{09/2025}
+    \item \textbf{Introduction to Integrated Photonics \& Quantum Communications} --- UNAL \hfill \textit{07/2024}
+    \item \textbf{Intermediate Python} --- SoloLearn \hfill \textit{03/2021}
+\end{itemize}
+
+\end{document}

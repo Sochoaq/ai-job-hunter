@@ -1,0 +1,184 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=0.55in, top=0.5in, bottom=0.5in]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{charter}
+\usepackage{fontawesome5}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{tikz}
+\usepackage{hyperref}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins, breakable}
+\usepackage{microtype}
+
+\definecolor{headerbg}{HTML}{FFFFFF}
+\definecolor{accent}{HTML}{1E3A5F}     % Professional Dark Navy
+\definecolor{accentblue}{HTML}{2B6CB0} % Slate Blue
+\definecolor{lightgray}{HTML}{F3F4F6}
+\definecolor{darktext}{HTML}{1F2937}
+\definecolor{skillbg}{HTML}{374151}
+\definecolor{bulletline}{HTML}{9CA3AF}
+\definecolor{subtletext}{HTML}{4B5563}
+
+\hypersetup{colorlinks=true, linkcolor=accentblue, urlcolor=accentblue}
+
+\titleformat{\section}{\large\bfseries\color{accent}}{}{0em}{}[\vspace{1pt}\titlerule]
+\titlespacing{\section}{0pt}{11pt}{7pt}
+
+\newtcbox{\skillbadge}{
+    on line, box align=base,
+    colback=skillbg, colframe=skillbg,
+    colupper=white,
+    fontupper=\small\bfseries,
+    arc=4pt, boxrule=0pt,
+    left=6pt, right=6pt, top=3pt, bottom=3pt,
+    boxsep=0pt
+}
+
+% Caja de entrada de experiencia con borde izquierdo elegante y continuo
+\newtcolorbox{timelineentry}{
+    blanker,
+    breakable,
+    borderline west={1.5pt}{0pt}{bulletline},
+    left=1.2em,
+    top=0pt,
+    bottom=0pt,
+    before skip=0.8ex,
+    after skip=2.6ex
+}
+
+\newcommand{\cventry}[5]{%
+  \noindent
+  \begin{minipage}{\textwidth}
+    \vspace{0pt}%
+    \tikz[baseline=-0.7ex]{\node[draw=accent, fill=white, circle, inner sep=2.5pt, line width=1.5pt] {};}%
+    \hspace{0.5em}%
+    {\large\bfseries\color{accent} #1}%
+    \hfill{\small\bfseries\color{accentblue} #4}\par
+    \vspace{0.2ex}%
+    \hspace{1.5em}{\normalsize\bfseries\color{darktext} #2}%
+    \hfill{\small\color{subtletext}\textit{#3}}\par
+  \end{minipage}\par
+  \vspace{0.4ex}%
+  \begin{timelineentry}
+    \small\color{darktext}
+    \begin{itemize}[label={\color{accentblue}\raisebox{0.2ex}{\tiny\faCircle}}, leftmargin=1.2em, itemsep=0.4ex, parsep=0pt, topsep=0pt, partopsep=0pt]
+      #5
+    \end{itemize}
+  \end{timelineentry}
+}
+
+\begin{document}
+\thispagestyle{empty}
+\color{darktext}
+
+% Encabezado
+\begin{center}
+    {\Huge \bfseries\color{accent} SANTIAGO ALEJANDRO OCHOA QUESADA} \\[6pt]
+    {\small\color{darktext}
+    \faEnvelope\ \href{mailto:santy.alejo4@gmail.com}{santy.alejo4@gmail.com}
+    \quad\textcolor{bulletline}{\textbar}\quad
+    \faPhone\ +57 320 351 7153
+    \quad\textcolor{bulletline}{\textbar}\quad
+    \faMapMarker*\ Bogotá, Colombia \\[4pt]
+    \faLinkedin\ \href{https://linkedin.com/in/santiago-alejandro-ochoa-quesada-a07a18288/}{LinkedIn}
+    \quad\textcolor{bulletline}{\textbar}\quad
+    \faGithub\ \href{https://github.com/Sochoaq}{GitHub}
+    }
+\end{center}
+\vspace{4pt}
+
+\section{Perfil Profesional}
+\textbf{Ingeniero Electrónico} de la Universidad Nacional de Colombia (promedio 4.6/5.0) y actual \textbf{Ingeniero de Proyectos} en AM4. Especializado en el liderazgo de iniciativas de ingeniería, automatización de flujos de datos e infraestructura bajo entornos Linux y redes. Destacado por integrar capacidades de \textbf{Inteligencia Artificial y analítica} para robustecer la seguridad tecnológica, el monitoreo continuo y la mitigación de riesgos operativos. Con sólida formación en redes y ciberseguridad (\textbf{Cisco CCNA y Ethical Hacking}), capacidad probada en gestión de proyectos industriales de alta exigencia y residencia en Bogotá (disponibilidad híbrida).
+
+\section{Experiencia Profesional}
+
+\cventry{Ingeniero de Proyectos (Control y Automatización)}{AM4}{Bogotá}{04/2026 - Actualidad}
+{
+    \item Ejecución de pruebas, validación y diagnóstico a motores y equipos industriales en proyectos para clientes como Refoenergy y Brinsa, asegurando parámetros de operación y confiabilidad.
+    \item Realización de medidas técnicas e instrumentación en campo en proyectos para Geopark (DPS), garantizando la precisión, consistencia y calidad de los datos operativos.
+    \item Programación básica de controladores lógicos programables (PLC) mediante lenguajes de descripción de hardware (HDL), apoyando la automatización de procesos industriales.
+    \item Desarrollo de flujos para adquisición, limpieza y transformación de datos operativos provenientes de sistemas de medición, integrando diferentes fuentes de información.
+    \item Implementación de automatizaciones en Python y C/C++ para capturar, organizar y procesar variables de operación industrial, reduciendo tareas manuales y facilitando el monitoreo.
+    \item Ejecución de pruebas, validaciones y análisis de inconsistencias en sistemas y señales de campo, documentando hallazgos y apoyando la resolución estructurada de problemas.
+    \item Coordinación y documentación de actividades técnicas del proyecto, seguimiento de entregables y elaboración de reportes para mantener la trazabilidad de la información operativa.
+}
+
+\cventry{Auxiliar Estudiantil}{Universidad Nacional de Colombia}{Bogotá}{07/2024 - 11/2025}
+{
+    \item Apoyo en laboratorios mediante organización, validación y análisis de resultados experimentales, programación, simulación y depuración de sistemas digitales y señales.
+    \item Preparación y verificación de prácticas, registros, equipos de instrumentación y material técnico, asegurando consistencia en la toma de datos durante las sesiones.
+    \item Acompañamiento a estudiantes en análisis de resultados, identificación de errores y resolución de problemas de electrónica y control durante prácticas de laboratorio.
+    \item Elaboración de guías, reportes y presentaciones técnicas para documentar procedimientos, fallas, hallazgos y aprendizajes de manera estructurada.
+}
+
+
+\section{Educación}
+
+\cventry{Ingeniería Electrónica}{Universidad Nacional de Colombia}{Bogotá}{02/2021 - 11/2025}
+{
+    \item \textbf{Promedio académico: 4.6 / 5.0}.
+    \item Formación en control continuo y discreto, automatización, sistemas digitales, procesamiento de señales, instrumentación, comunicaciones y análisis numérico.
+    \item Desarrollo de proyectos enfocados en simulación de procesos, programación de hardware, validación experimental y elaboración de reportes técnicos de ingeniería.
+}
+
+\newpage
+
+
+\section{Proyectos Relevantes}
+
+\cventry{Procesamiento y análisis de sistemas de medición}{Python y automatización de reportes}{Bogotá}{2026}
+{
+    \item Desarrollo de un flujo para adquirir, estructurar y procesar datos provenientes de instrumentación y medición, incluyendo validación de registros y análisis de resultados mediante Python.
+    \item Implementación de calibración, transformación y visualización de datos industriales, junto con generación automática de informes para facilitar el seguimiento operativo.
+    \item Realización de controles de calidad y pruebas de consistencia para identificar señales atípicas, errores de adquisición y oportunidades de mejora en procesos de control.
+}
+
+\cventry{Análisis de datos para inspección técnica}{AM4}{Bogotá}{2026}
+{
+    \item Procesamiento y organización de datos de inspección aérea y modelos de visión artificial para la detección y monitoreo automático de infraestructura eléctrica y postes.
+    \item Análisis de métricas, validación de resultados y seguimiento de pruebas de campo para evaluar la calidad de las inspecciones y apoyar decisiones de mantenimiento.
+    \item Desarrollo de componentes para almacenamiento, consulta, visualización y documentación de los resultados, facilitando la trazabilidad del estado de la infraestructura.
+}
+
+
+\section{Habilidades}
+\begin{tcolorbox}[colback=lightgray, colframe=lightgray, boxrule=0pt, arc=6pt, left=10pt, right=10pt, top=10pt, bottom=10pt]
+\noindent
+\linespread{1.8}\selectfont
+\skillbadge{Automatización de Procesos}
+\skillbadge{Control Industrial}
+\skillbadge{Ciberseguridad y Redes}
+\skillbadge{Cisco CCNA}
+\skillbadge{Ethical Hacking}
+\skillbadge{Linux \& Infraestructura}
+\skillbadge{Python}
+\skillbadge{C/C++}
+\skillbadge{SQL}
+\skillbadge{Adquisición de Datos}
+\skillbadge{Validación de Señales}
+\skillbadge{Gestión de Proyectos}
+\skillbadge{Documentación Técnica}
+\skillbadge{Resolución de Problemas}
+\skillbadge{Trabajo en Equipo}
+\end{tcolorbox}
+
+\section{Idiomas}
+\begin{itemize}[label={}, leftmargin=0.3cm, itemsep=6pt]
+    \item \textbf{Español} \hfill Nativo \quad \textcolor{accent}{\faCircle \faCircle \faCircle \faCircle \faCircle}
+    \item \textbf{Inglés} \hfill B2 (Profesional de Trabajo) \quad \textcolor{accent}{\faCircle \faCircle \faCircle \faCircle} \textcolor{bulletline}{\faCircle}
+    \item \textbf{Francés} \hfill A2 \quad \textcolor{accent}{\faCircle \faCircle} \textcolor{bulletline}{\faCircle \faCircle \faCircle}
+\end{itemize}
+
+\section{Certificaciones}
+\begin{itemize}[label={\color{accentblue}\faAward}, leftmargin=0.6cm, itemsep=6pt]
+    \item \textbf{Ethical Hacking \& Cybersecurity} --- Cisco Networking Academy \hfill \textit{04/2026}
+    \item \textbf{CCNA: Introduction to Networks} --- Cisco Networking Academy \hfill \textit{07/2025}
+    \item \textbf{Análisis Computacional de Datos Ambientales} --- Universidad Nacional de Colombia \hfill \textit{09/2025}
+    \item \textbf{Introducción a la Fotónica Integrada y las Comunicaciones Cuánticas} --- UNAL \hfill \textit{07/2024}
+    \item \textbf{Python Intermedio} --- SoloLearn \hfill \textit{03/2021}
+\end{itemize}
+
+\end{document}

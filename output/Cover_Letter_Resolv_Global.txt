@@ -1,0 +1,20 @@
+Dear Resolv Global Hiring Team,
+
+I am writing to express my strong enthusiasm for the Junior AI/ML Engineer position at Resolv Global. As an Electronic Engineer from Universidad Nacional de Colombia (GPA 4.6/5.0) and currently a Project Engineer at AM4, I have dedicated my career to building high-reliability software, data pipelines, and applied AI systems. I am eager to bring my hands-on background in Python, conversational AI agents, and RAG architectures to help your team turn cutting-edge prototypes into dependable, production-ready solutions.
+
+Throughout my professional and technical work, I have designed and deployed end-to-end AI and automation workflows:
+• AI Agents & Tool Calling: Implemented conversational and task-oriented agents using LLM APIs (OpenAI, Claude) and frameworks like LangChain, incorporating dynamic function calling, external API consumption, and robust multi-turn state handling.
+• RAG Retrieval Pipelines: Built retrieval systems featuring intelligent text chunking, vector embeddings, hybrid indexing, and evaluation guardrails to ensure precise, context-grounded responses.
+• Production Engineering & APIs: Developed modular REST APIs in Python (FastAPI), interfaced with relational databases (SQL), containerized services using Docker, and established automated testing (Pytest) and CI/CD pipelines to guarantee operational stability.
+
+I bring professional working proficiency in English, native fluency in Spanish, and a collaborative mindset tailored for cross-functional teamwork with full-stack engineers, CX designers, and operations specialists. Based in Bogotá, Colombia, I have full availability for your remote engineering setup.
+
+Thank you very much for your time and consideration. I would welcome the opportunity to discuss how my technical skills, engineering rigor, and passion for AI agents can contribute directly to Resolv Global’s mission.
+
+Sincerely,
+
+Santiago Alejandro Ochoa Quesada
+Electronic Engineer | AI Engineering & Software
+santy.alejo4@gmail.com | +57 320 351 7153 | Bogotá, Colombia
+LinkedIn: https://linkedin.com/in/santiago-alejandro-ochoa-quesada-a07a18288/
+GitHub: https://github.com/Sochoaq

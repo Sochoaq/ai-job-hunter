@@ -1,0 +1,20 @@
+Estimado Equipo de Selección de Bancolombia,
+
+Me dirijo a ustedes con gran entusiasmo para presentar mi postulación a las vacantes de Ingeniero/a de Software Nivel 1 (Junior) en el Grupo Bancolombia, particularmente con foco en Integración de Datos y Archivos TI y Servicios Transversales. Como Ingeniero Electrónico de la Universidad Nacional de Colombia (promedio 4.6/5.0) y actual Ingeniero de Proyectos en AM4, combino un riguroso pensamiento analítico con experiencia práctica en desarrollo backend en Python, diseño de bases de datos SQL y construcción de arquitecturas de software confiables.
+
+A lo largo de mi trayectoria técnica, he desarrollado competencias directamente alineadas con los desafíos tecnológicos y estándares de TI del Banco:
+• Integración de Datos y Pipelines (ETL): Diseño e implementación de flujos automatizados en Python y SQL para la captura, procesamiento, depuración y transformación estructurada de datos masivos y archivos operativos multi-fuente.
+• Desarrollo Backend y APIs: Creación de microservicios y endpoints REST con FastAPI, modelado entidad-relación y gestión de persistencia relacional con altos estándares de consistencia y seguridad.
+• Calidad, Resiliencia y Despliegue: Pruebas automatizadas (QA con Pytest), contenedorización en Docker, integración continua con GitHub Actions y monitoreo de variables críticas, logrando un 98% de confiabilidad en entornos operativos para clientes de alta exigencia.
+
+Cuento con sólida formación en redes y seguridad (Cisco CCNA y Ethical Hacking), dominio de inglés intermedio-avanzado (B2) y adaptabilidad a marcos de trabajo colaborativos y ágiles (Scrum). Me motiva profundamente el propósito de Bancolombia de impulsar el desarrollo sostenible y la inclusión financiera a través de tecnología robusta y de vanguardia.
+
+Agradezco de antemano el tiempo dedicado a revisar mi perfil y quedo a su entera disposición para ampliar cualquier información en una entrevista técnica.
+
+Atentamente,
+
+Santiago Alejandro Ochoa Quesada
+Ingeniero Electrónico | AI & Software Engineering
+santy.alejo4@gmail.com | +57 320 351 7153 | Bogotá, Colombia
+LinkedIn: https://linkedin.com/in/santiago-alejandro-ochoa-quesada-a07a18288/
+GitHub: https://github.com/Sochoaq

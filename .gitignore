@@ -10,7 +10,16 @@ __pycache__/
 venv/
 
 # Compiled documents
+*.aux
+*.log
+*.out
+*.synctex.gz
+*.fls
+*.fdb_latexmk
+build/
 *.pdf
+!output/*.pdf
+!documents/*.pdf
 *.aux
 *.log
 *.out
@@ -120,7 +129,9 @@ company_research/*.json
 # Brainstorm mockups (superpowers visual companion) - never ship
 .superpowers/
 
-output/
+output/*.aux
+output/*.log
+output/*.out
 *.db
 job_tracker.db
 

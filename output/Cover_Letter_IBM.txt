@@ -1,0 +1,12 @@
+Estimado equipo de selección de IBM,
+
+Me dirijo a ustedes con gran entusiasmo para postularme al rol de Technical Consultant - TDR - Threat Responder. Como Ingeniero Electrónico de la Universidad Nacional de Colombia, graduado con un destacado promedio de 4.6/5.0 y con formación especializada en Ciberseguridad y Ethical Hacking por Cisco Networking Academy, poseo una sólida base analítica para la correlación de eventos, la investigación profunda de registros y la respuesta estructurada a incidentes complejos.
+
+A lo largo de mi trayectoria en AM4 y en el desarrollo de proyectos de misión crítica, he perfeccionado mis habilidades en el análisis avanzado de logs, la identificación de vectores de anomalías y la ejecución rigurosa de diagnósticos de causa raíz (RCA). Mi experiencia abarca el manejo de sistemas Linux y Windows, la automatización de procesos mediante Python y C/C++, y la gestión de flujos de datos distribuidos, lo que me permite comprender a profundidad la superficie de ataque y los puntos vulnerables en infraestructuras tecnológicas híbridas.
+
+Me entusiasma especialmente la oportunidad de aportar mi mentalidad analítica, mi rigor técnico y mi capacidad para la comunicación técnica y la escalación de incidentes a un equipo líder global como IBM. Estoy preparado para colaborar activamente en la optimización de plataformas de detección y respuesta, garantizando la resiliencia digital de sus clientes.
+
+Agradezco de antemano su tiempo al evaluar mi candidatura y quedo a su entera disposición para profundizar en cómo mis competencias técnicas se alinean con los objetivos de IBM Consulting.
+
+Atentamente,
+Santiago Alejandro Ochoa Quesada
