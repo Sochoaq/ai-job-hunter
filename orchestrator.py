@@ -1,0 +1,203 @@
+import os
+import sys
+import json
+import re
+import time
+from typing import Dict, Any, List
+from pydantic import BaseModel, Field
+from dotenv import load_dotenv
+
+load_dotenv()
+
+def get_api_key(name: str) -> str:
+    # 1. Variable de entorno actual
+    key = os.environ.get(name)
+    if key:
+        return key
+    # 2. Registro de Windows (User Environment)
+    if sys.platform == "win32":
+        try:
+            import winreg
+            with winreg.OpenKey(winreg.HKEY_CURRENT_USER, r"Environment") as k:
+                val, _ = winreg.QueryValueEx(k, name)
+                if val:
+                    return val
+        except Exception:
+            pass
+    return ""
+
+class FitAnalysis(BaseModel):
+    fit_score: int = Field(description="Puntuación de compatibilidad de 0 a 100")
+    recommendation: str = Field(description="'APPLY_PRIORITY', 'APPLY_STANDARD', o 'SKIP'")
+    profile_track: str = Field(description="Track detectado: 'AI_ENGINEERING', 'CLOUD_DEVOPS', o 'HARDWARE_EMBEDDED'")
+    language_fit: str = Field(description="Evaluación de idioma: 'IDEAL_LATAM_SPANISH', 'TECHNICAL_ENGLISH_B2_OK', o 'RISK_C1_NATIVE_DEMANDED'")
+    matching_skills: List[str] = Field(description="Habilidades del candidato que coinciden directamente")
+    missing_skills: List[str] = Field(description="Requerimientos que faltan o requieren explicación")
+    key_talking_points: List[str] = Field(description="Puntos fuertes del candidato a destacar en la postulación")
+    suggested_angle: str = Field(description="Enfoque estratégico para la postulación")
+
+class ProjectItem(BaseModel):
+    name: str = Field(description="Nombre del proyecto técnico relevante")
+    description: str = Field(description="Descripción del impacto, solución y stack tecnológico aplicado")
+
+class TailoredApplication(BaseModel):
+    cv_summary: str = Field(description="Resumen profesional adaptado a la vacante (3-4 líneas)")
+    tailored_experience: List[str] = Field(description="Viñetas STAR con métricas enfocadas en el rol")
+    tailored_projects: List[ProjectItem] = Field(description="Proyectos más relevantes con stack ajustado")
+    cover_letter: str = Field(description="Carta de presentación persuasiva y técnica en el idioma de la vacante")
+
+def load_candidate_config() -> Dict[str, Any]:
+    """Load local candidate configuration if available, otherwise fall back to example defaults."""
+    base_dir = os.path.dirname(__file__)
+    for filename in ("candidate_config.local.json", "candidate_config.example.json"):
+        cfg_path = os.path.join(base_dir, filename)
+        if os.path.exists(cfg_path):
+            with open(cfg_path, "r", encoding="utf-8") as f:
+                return json.load(f)
+    return {
+        "file_prefix": "Candidate",
+        "candidate_header": {
+            "name": "[YOUR_NAME]",
+            "title": "AI Systems & MLOps Engineer",
+            "email": "candidate@example.com",
+            "phone": "+00 000 000 0000",
+            "location": "City, Country",
+            "linkedin": "linkedin.com/in/your-profile",
+            "github": "github.com/your-username",
+        },
+    }
+
+
+def get_candidate_profile() -> str:
+    skills_dir = os.path.join(
+        os.path.dirname(__file__),
+        ".claude", "skills", "job-application-assistant",
+    )
+    for filename in ("01-candidate-profile.local.md", "01-candidate-profile.md"):
+        profile_path = os.path.join(skills_dir, filename)
+        if os.path.exists(profile_path):
+            with open(profile_path, "r", encoding="utf-8") as f:
+                return f.read()
+    return "AI Systems, Cloud & Embedded Engineer"
+
+class Orchestrator:
+    def __init__(self):
+        self.gemini_api_key = get_api_key("GEMINI_API_KEY")
+        self.anthropic_api_key = get_api_key("ANTHROPIC_API_KEY")
+
+    def evaluate_job(self, job_title: str, company: str, job_description: str) -> Dict[str, Any]:
+        """Agente Evaluador con Gemini: clasifica y calcula match multi-perfil (AI, Cloud, Hardware)."""
+        if not self.gemini_api_key:
+            return {"error": "GEMINI_API_KEY no encontrada."}
+        try:
+            from google import genai
+            client = genai.Client(api_key=self.gemini_api_key)
+            profile = get_candidate_profile()
+            cfg = load_candidate_config()
+            candidate_name = cfg.get("candidate_header", {}).get("name", "[YOUR_NAME]")
+
+            prompt = f"""
+            Eres el 'Talent Matchmaker Agent' para {candidate_name}.
+            {candidate_name} está abierto y altamente calificado para tres verticales principales:
+            1. AI Engineering (Machine Learning, Computer Vision, Signal DSP / FFT, MLOps, PyTorch, Python).
+            2. Cloud & Systems Engineering (AWS, Linux, Docker, CI/CD GitHub Actions, Data Pipelines ETL, QA Pytest).
+            3. Hardware & Embedded Engineering (ESP32, C/C++, Sensores I2C/SPI, Telemetría, Firmware).
+
+            --- REGLA CRÍTICA DE IDIOMA Y PRIORIZACIÓN (INGLÉS B2) ---
+            Evalúa el ajuste de idioma del candidato (p. ej. dominio técnico escrito y conversación funcional B2) según su perfil.
+            - DA MÁXIMA PRIORIDAD (recommendation: 'APPLY_PRIORITY') a:
+              * Vacantes remotas dirigidas a Latinoamérica o con base en España/LatAm.
+              * Equipos internacionales donde el trabajo diario sea en inglés técnico/escrito estándar (B2 funcional).
+              * Vacantes que no exijan explícitamente fluidez nativa o C1.
+            - IDENTIFICA 'RISK_C1_NATIVE_DEMANDED':
+              * Si la vacante exige taxativamente "Native English Speaker", "C1 fluency mandatory", o es un rol con alto componente de llamadas ejecutivas comerciales/ventas en inglés con clientes US/UK. En tales casos reduce el fit_score y marca recommendation como 'APPLY_STANDARD' o 'SKIP'.
+
+            --- PERFIL DEL CANDIDATO ---
+            {profile}
+
+            --- VACANTE A EVALUAR ---
+            Empresa: {company}
+            Cargo: {job_title}
+            Descripción:
+            {job_description}
+
+            Evalúa la vacante, identifica el track dominante, evalúa el fit de idioma y calcula el fit score exacto (0-100).
+            """
+            for attempt in range(3):
+                try:
+                    response = client.models.generate_content(
+                        model="gemini-3.5-flash-lite",
+                        contents=prompt,
+                        config=dict(
+                            response_mime_type="application/json",
+                            response_schema=FitAnalysis,
+                        ),
+                    )
+                    return json.loads(response.text)
+                except Exception as ex:
+                    if attempt < 2 and ("503" in str(ex) or "UNAVAILABLE" in str(ex) or "high demand" in str(ex)):
+                        time.sleep(2 * (attempt + 1))
+                        continue
+                    raise ex
+        except Exception as e:
+            return {"error": f"Error evaluando vacante: {str(e)}"}
+
+    def tailor_application(self, job_title: str, company: str, job_description: str, fit_analysis: Dict[str, Any]) -> Dict[str, Any]:
+        """Agente Redactor: adapta CV y Cover Letter destacando el track exacto de la vacante."""
+        if not self.gemini_api_key:
+            return {"error": "GEMINI_API_KEY no encontrada."}
+        try:
+            from google import genai
+            client = genai.Client(api_key=self.gemini_api_key)
+            profile = get_candidate_profile()
+            cfg = load_candidate_config()
+            candidate_name = cfg.get("candidate_header", {}).get("name", "[YOUR_NAME]")
+
+            prompt = f"""
+            Eres un 'ATS Resume & Cover Letter Tailor' de clase mundial para {candidate_name}.
+            Tu misión es generar una postulación adaptada, persuasiva y técnica orientada a superar filtros ATS y convencer al Hiring Manager.
+
+            --- REGLA DE ESTILO CRÍTICA ---
+            - El tono debe ser altamente profesional, riguroso y técnico.
+            - NUNCA menciones nivel de idiomas ni limitaciones lingüísticas en el CV ni en la carta.
+            - Si la vacante está en inglés, redacta todo en inglés técnico impecable, fluido y natural. Si está en español, en español formal de ingeniería.
+
+            --- PERFIL DEL CANDIDATO ---
+            {profile}
+
+            --- EVALUACIÓN Y TRACK DETECTADO ---
+            {json.dumps(fit_analysis, indent=2, ensure_ascii=False)}
+
+            --- VACANTE ---
+            Empresa: {company}
+            Cargo: {job_title}
+            Descripción:
+            {job_description}
+
+            Genera:
+            1. cv_summary: Resumen profesional de 3-4 líneas alineado al rol.
+            2. tailored_experience: 4 viñetas STAR con contexto industrial, acciones técnicas y métricas.
+            3. tailored_projects: 2 proyectos clave con el stack exacto.
+            4. cover_letter: Carta de presentación impecable (en inglés si la oferta es en inglés, o en español).
+            """
+            for attempt in range(3):
+                try:
+                    response = client.models.generate_content(
+                        model="gemini-3.5-flash-lite",
+                        contents=prompt,
+                        config=dict(
+                            response_mime_type="application/json",
+                            response_schema=TailoredApplication,
+                        ),
+                    )
+                    return json.loads(response.text)
+                except Exception as ex:
+                    if attempt < 2 and ("503" in str(ex) or "UNAVAILABLE" in str(ex) or "high demand" in str(ex)):
+                        time.sleep(2 * (attempt + 1))
+                        continue
+                    raise ex
+        except Exception as e:
+            return {"error": f"Error redactando postulación: {str(e)}"}
+
+if __name__ == "__main__":
+    print("Orquestador Multi-Perfil (AI, Cloud & Hardware) listo.")

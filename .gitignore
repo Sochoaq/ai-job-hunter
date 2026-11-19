@@ -10,6 +10,13 @@ __pycache__/
 venv/
 
 # Compiled documents
+*.aux
+*.log
+*.out
+*.synctex.gz
+*.fls
+*.fdb_latexmk
+build/
 *.pdf
 *.aux
 *.log
@@ -119,3 +126,17 @@ company_research/*.json
 
 # Brainstorm mockups (superpowers visual companion) - never ship
 .superpowers/
+
+output/
+portfolio/
+templates/CV_*.tex
+templates/cv_timeline*.tex
+candidate_config.local.json
+.claude/skills/job-application-assistant/*.local.md
+scratch/
+*.db
+job_tracker.db
+
+# Tools binaries
+tools/*.exe
+*.exe

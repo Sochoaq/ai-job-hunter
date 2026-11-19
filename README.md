@@ -12,6 +12,18 @@
 
 [![CI](https://github.com/MadsLorentzen/ai-job-search/actions/workflows/ci.yml/badge.svg)](https://github.com/MadsLorentzen/ai-job-search/actions/workflows/ci.yml)
 
+## Python Multi-Agent Orchestration & Document Synthesis Engine
+
+In addition to the interactive Claude Code slash-command workflow (`/setup`, `/scrape`, `/rank`, `/apply`), this repository includes a standalone **Python Multi-Agent Orchestration & Automated Document Synthesis** backend:
+
+| Module | Architecture & Responsibilities |
+| :--- | :--- |
+| **`orchestrator.py`** | Multi-agent evaluation & tailoring pipeline built on **Google GenAI** (`gemini-3.5-flash-lite`) with strict **Pydantic** structured output schemas (`FitAnalysis`, `TailoredApplication`), multi-track semantic classification (`AI_ENGINEERING`, `CLOUD_DEVOPS`, `HARDWARE_EMBEDDED`), deterministic CEFR language-gate filtering, and exponential backoff retry resilience. |
+| **`job_scout.py`** | Multi-source job ingestion and heuristic track router across public job feeds (LinkedIn guest endpoints, Get on Board, RemoteOK, Arbeitnow, and regional boards). |
+| **`pdf_generator.py`** | Dual-engine document compiler: compiles a 2-page LaTeX (`Tectonic` / `TikZ` Timeline) CV and source `.tex` with automatic **PyMuPDF** fallback, configured dynamically via `candidate_config.local.json` (or `candidate_config.example.json`). |
+| **`job_tracker.py`** | **SQLite** application state persistence (`job_tracker.db`) with self-contained HTML analytics dashboard and Excel-compatible CSV generation. |
+| **`hunt.py` & `run_batch.py`** | Interactive CLI and autonomous batch autopilot runner (`execute_batch`) configured via `candidate_config.local.json` and `.claude/skills/job-application-assistant/01-candidate-profile.local.md` (keeping all personal data local and untracked). |
+
 An AI-powered job application framework built on [Claude Code](https://claude.com/claude-code). Fork it, fill in your profile, and let Claude evaluate job postings, tailor your CV, write cover letters, and prepare you for interviews.
 
 > Note: This is an independent open-source project and is not affiliated with, endorsed by, sponsored by, or maintained by Anthropic. Anthropic and Claude Code are referenced only to describe the toolchain this workflow uses.

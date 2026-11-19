@@ -1,0 +1,50 @@
+{
+  "file_prefix": "Candidate",
+  "candidate_header": {
+    "name": "[YOUR_NAME]",
+    "title": "AI Systems & MLOps Engineer",
+    "email": "candidate@example.com",
+    "phone": "+00 000 000 0000",
+    "location": "City, Country",
+    "linkedin": "linkedin.com/in/your-profile",
+    "github": "github.com/your-username"
+  },
+  "default_summary_latex": "\\textbf{AI Systems \\& MLOps Engineer} specializing in multi-agent LLM orchestration, deterministic guardrails, automated evaluation pipelines, and scalable Python/Docker backends.",
+  "core_experience_bullets_latex": [
+    "    \\item Architected multi-agent LLM evaluation and document synthesis pipelines with Pydantic structured outputs and retry resilience.",
+    "    \\item Built containerized MLOps and telemetry processing workflows using Python, Docker, SQL, and automated Pytest verification gates.",
+    "    \\item Integrated edge signal acquisition and cloud synchronization pipelines with automated anomaly detection and reporting."
+  ],
+  "experience_entries_latex": {
+    "primary": {
+      "role": "[CURRENT_ROLE]",
+      "company": "[CURRENT_COMPANY]",
+      "location": "City, Country",
+      "period": "MM/YYYY - Present",
+      "fallback_role": "[CURRENT_ROLE] | [CURRENT_COMPANY]",
+      "exclude_keywords": []
+    },
+    "secondary_latex": "\\cventry{[PREVIOUS_ROLE]}{[PREVIOUS_ORGANIZATION]}{City, Country}{MM/YYYY - MM/YYYY}\n{\n    \\item Engineered data processing pipelines, automated test suites, and technical documentation across cross-functional engineering projects.\n}"
+  },
+  "education_entry_latex": "\\cventry{[DEGREE_IN_ENGINEERING_OR_CS]}{[YOUR_UNIVERSITY]}{City, Country}{YYYY - YYYY}\n{\n    \\item Focus on Machine Learning, Digital Signal Processing, Cloud Architecture, and Distributed Systems.\n}",
+  "default_projects_latex": [
+    "\\cventry{Multi-Agent LLM Orchestration Engine}{Python, Gemini / Claude APIs, Pydantic}{Remote}{2026}\n{\n    \\item Designed a structured multi-agent pipeline separating fit scoring, semantic routing, and automated PDF layout verification.\n    \\item Enforced prompt-injection sanitization guards and deterministic schema validation across all external job postings.\n}"
+  ],
+  "skills_badges": [
+    "Multi-Agent AI \\& LLMs",
+    "Pydantic \\& Structured Outputs",
+    "Python",
+    "RAG Pipelines",
+    "PyTorch / Scikit-Learn",
+    "SQL \\& ETL Pipelines",
+    "Docker",
+    "GitHub Actions CI/CD",
+    "Pytest \\& QA"
+  ],
+  "languages_latex": "\\begin{itemize}[label={}, leftmargin=0.3cm, itemsep=4pt]\n    \\item \\textbf{English} \\hfill Full Professional Proficiency \\quad \\textcolor{accent}{\\faCircle \\faCircle \\faCircle \\faCircle \\faCircle}\n    \\item \\textbf{Spanish} \\hfill Native \\quad \\textcolor{accent}{\\faCircle \\faCircle \\faCircle \\faCircle \\faCircle}\n\\end{itemize}",
+  "certifications_latex": "\\begin{itemize}[label={\\color{accentblue}\\faAward}, leftmargin=0.6cm, itemsep=4pt]\n    \\item \\textbf{[CERTIFICATION_NAME]} --- [ISSUER] \\hfill \\textit{YYYY}\n\\end{itemize}",
+  "summary_bold_terms": [
+    "AI Systems",
+    "MLOps Engineer"
+  ]
+}
