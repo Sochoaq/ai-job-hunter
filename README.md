@@ -2,15 +2,9 @@
   <img src="assets/mascot/pip_flight_loop.gif" alt="Pip, the courier bird" width="200">
 </p>
 
-# AI Job Search
+# AI Job Hunter — Multi-Agent LLM Orchestration & Document Synthesis Engine
 
-*The job search that runs on your machine.*
-
-<p align="center">
-  <a href="https://trendshift.io/repositories/43622?utm_source=trendshift-badge&amp;utm_medium=badge&amp;utm_campaign=badge-trendshift-43622" target="_blank" rel="noopener noreferrer"><img src="https://trendshift.io/api/badge/trendshift/repositories/43622/daily" alt="MadsLorentzen%2Fai-job-search | Trendshift" width="250" height="55"/></a>
-</p>
-
-[![CI](https://github.com/MadsLorentzen/ai-job-search/actions/workflows/ci.yml/badge.svg)](https://github.com/MadsLorentzen/ai-job-search/actions/workflows/ci.yml)
+*Autonomous multi-agent job evaluation, prompt-injection sanitization, semantic role routing, and LaTeX/PDF synthesis running locally on your machine.*
 
 ## Python Multi-Agent Orchestration & Document Synthesis Engine
 
@@ -24,30 +18,28 @@ In addition to the interactive Claude Code slash-command workflow (`/setup`, `/s
 | **`job_tracker.py`** | **SQLite** application state persistence (`job_tracker.db`) with self-contained HTML analytics dashboard and Excel-compatible CSV generation. |
 | **`hunt.py` & `run_batch.py`** | Interactive CLI and autonomous batch autopilot runner (`execute_batch`) configured via `candidate_config.local.json` and `.claude/skills/job-application-assistant/01-candidate-profile.local.md` (keeping all personal data local and untracked). |
 
-An AI-powered job application framework built on [Claude Code](https://claude.com/claude-code). Fork it, fill in your profile, and let Claude evaluate job postings, tailor your CV, write cover letters, and prepare you for interviews.
+An AI-powered multi-agent career orchestration framework supporting both [Claude Code](https://claude.com/claude-code) subagent workflows and a standalone **Python + Gemini SDK** backend (`orchestrator.py`, `hunt.py`, `run_batch.py`).
 
-> Note: This is an independent open-source project and is not affiliated with, endorsed by, sponsored by, or maintained by Anthropic. Anthropic and Claude Code are referenced only to describe the toolchain this workflow uses.
->
-> This project has **no affiliated cryptocurrency, token, or paid sponsorship program**. Anything claiming otherwise is unauthorized and should be treated as a scam. The only ways to support the project are the Ko-fi link below and contributing on GitHub.
+> Note: This is an independent open-source project and is not affiliated with, endorsed by, sponsored by, or maintained by Anthropic or Google. Anthropic, Claude Code, and Gemini are referenced only to describe the toolchains this workflow integrates.
 
-## Does it actually work?
+## System Architecture
 
-I'm a geophysicist by training. When my position was cut in late 2025, I built this framework to run my own job search - the same `/scrape`, `/apply`, and `/interview` workflow in this repo, used weekly, on my own career. I was upfront about it with every employer I spoke to, and instead of counting against me, it usually sparked a genuine technical conversation.
+```mermaid
+flowchart LR
+    A["Job Portals & Feeds (LinkedIn / Get on Board / RemoteOK / Arbeitnow)"] --> B["Sanitization & Prompt-Injection Gate (posting_guard.py)"]
+    B --> C["Evaluator Agent (orchestrator.py -> FitAnalysis Pydantic Schema)"]
+    C -->|"fit_score >= threshold & CEFR Gate Pass"| D["Drafter-Reviewer Agent Pipeline (TailoredApplication Schema)"]
+    D --> E["Dual-Engine Compiler (pdf_generator.py: Tectonic LaTeX / PyMuPDF Fallback)"]
+    E --> F["ATS Text-Layer & Layout Verification (verify_pdf.py / verify_layout.py)"]
+    F --> G["SQLite Analytics & HTML/CSV Tracker (job_tracker.py)"]
+```
 
-Sixty-nine tailored applications, twenty first interviews, and one signed contract later, I started as an AI engineer in June 2026. People kept asking whether this actually works. It got me hired. Now it's yours.
+### Key Architectural Guarantees
 
-*The longer version, including the full application funnel, is on [LinkedIn](https://www.linkedin.com/in/mads-lorentzen/).*
-
-<p align="center">
-  <i>Did this save you a Sunday of cover-letter writing? Consider a coffee.<br>
-  Did it land you the job? Maybe two.</i> ☕
-</p>
-
-<p align="center">
-  <a href="https://ko-fi.com/madslorentzen">
-    <img src="https://storage.ko-fi.com/cdn/kofi3.png?v=6" alt="Buy me a coffee at ko-fi.com" height="40">
-  </a>
-</p>
+1. **Multi-Agent Role Separation & Structured Schemas:** Evaluation (`FitAnalysis`), drafting (`TailoredApplication`), and adversarial review are strictly isolated into separate contexts with `Pydantic` validation and exponential backoff retries.
+2. **Untrusted Input Sanitization (`tools/posting_guard.py`):** External HTML/text postings pass a deterministic integrity gate that strips invisible Unicode tag characters, collapsed/hidden DOM elements, hidden links, and prompt-injection patterns before reaching any LLM context.
+3. **Supply-Chain & Permission Verification (`tools/security_guards.py`):** Enforces strict `.gitignore` non-exposure rules, Claude permission allowlists/denylists, and package lifecycle script checks across all portal CLI modules.
+4. **Dual-Engine LaTeX/PDF Synthesis & ATS Audit:** Generates tailored two-page TikZ Timeline CVs via `Tectonic` with automatic `PyMuPDF` fallback, followed by PDF text-layer extraction (`verify_pdf.py`) and geometric orphan/collision verification (`verify_layout.py`).
 
 ## What this is
 
@@ -81,7 +73,7 @@ The framework encodes career guidance best practices, including structured evalu
 
 ## Quick start
 
-> 🎥 **Prefer to see it in action first?** [The Next New Thing did a hands-on walkthrough](https://www.youtube.com/watch?v=HoVxjMNFYv4) of how the workflow is actually used, from setup to a finished application (recorded August 2026 - commands may have evolved since).
+> **Prefer to see it in action first?** [The Next New Thing did a hands-on walkthrough](https://www.youtube.com/watch?v=HoVxjMNFYv4) of how the workflow is actually used, from setup to a finished application.
 
 ### 1. Fork and clone
 
@@ -384,8 +376,9 @@ Thinking about a PR? Read [CONTRIBUTING.md](CONTRIBUTING.md) first - it explains
 
 ## Acknowledgements
 
+- Upstream Claude Code framework base (MIT): [Mads Lorentzen (`ai-job-search`)](https://github.com/MadsLorentzen/ai-job-search)
 - [Mikkel Krogholm](https://github.com/mikkelkrogsholm) ([skills repo](https://github.com/mikkelkrogsholm/skills)) for the job search CLI skills
-- Built with [Claude Code](https://claude.com/claude-code) by [Anthropic](https://anthropic.com)
+- Built with [Claude Code](https://claude.com/claude-code) by [Anthropic](https://anthropic.com) and Google GenAI SDK
 
 ## License
 
