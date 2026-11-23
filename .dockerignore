@@ -1,0 +1,43 @@
+# ==============================================================================
+# .dockerignore - AI Job Hunter
+# Strictly excludes local PII, CVs, SQLite trackers, credentials & binaries
+# ==============================================================================
+.git/
+.github/
+.venv/
+venv/
+__pycache__/
+*.pyc
+*.pyo
+node_modules/
+.agents/**/node_modules/
+.vscode/
+.idea/
+.superpowers/
+output/
+documents/
+portfolio/
+scratch/
+reports/
+gmail_sync/
+company_research/*.json
+candidate_config.local.json
+**/*.local.md
+.claude/settings.local.json
+.claude/projects/
+salary_data.json
+job_search_tracker.csv
+cv/main_*.*
+!cv/main_example.tex
+cover_letters/cover_*.*
+cover_letters/Cover_*.*
+!cover_letters/cover_example.tex
+*.db
+*.pdf
+*.tex
+*.aux
+*.log
+tools/*.exe
+*.exe
+.env
+.env.*

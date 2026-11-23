@@ -41,6 +41,16 @@ flowchart LR
 3. **Supply-Chain & Permission Verification (`tools/security_guards.py`):** Enforces strict `.gitignore` non-exposure rules, Claude permission allowlists/denylists, and package lifecycle script checks across all portal CLI modules.
 4. **Dual-Engine LaTeX/PDF Synthesis & ATS Audit:** Generates tailored two-page TikZ Timeline CVs via `Tectonic` with automatic `PyMuPDF` fallback, followed by PDF text-layer extraction (`verify_pdf.py`) and geometric orphan/collision verification (`verify_layout.py`).
 
+### Container Execution (Docker & Docker Compose)
+
+The Python multi-agent backend ships with a multi-stage, non-root `Dockerfile` (`UID 10001`) and strict `.dockerignore` isolating local credentials, SQLite trackers, and candidate documents from the container context:
+
+```bash
+docker compose build
+docker compose run --rm job-hunter python tools/security_guards.py
+docker compose run --rm job-hunter python run_batch.py
+```
+
 ## What this is
 
 A structured workflow that turns Claude Code into a full-stack job application assistant. The core workflow (self-profiling, fit evaluation, and the drafter-reviewer application pipeline) is **language- and country-agnostic**. The job portal search skills are built for the Danish market (Jobindex, Jobnet, Akademikernes Jobbank, etc.), but the pattern is designed to be swapped for your local job boards.

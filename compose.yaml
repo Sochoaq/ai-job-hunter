@@ -1,0 +1,15 @@
+services:
+  job-hunter:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: ai-job-hunter:latest
+    container_name: ai-job-hunter-orchestrator
+    environment:
+      - GEMINI_API_KEY=${GEMINI_API_KEY:-}
+    volumes:
+      - ./output:/app/output
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
