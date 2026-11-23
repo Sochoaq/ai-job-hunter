@@ -39,7 +39,8 @@ RUN groupadd --gid 10001 hunter && \
 WORKDIR /app
 
 COPY --from=builder /opt/venv /opt/venv
-COPY --chown=hunter:hunter orchestrator.py job_scout.py job_tracker.py pdf_generator.py hunt.py run_batch.py salary_lookup.py candidate_config.example.json .gitignore README.md ./
+COPY --chown=hunter:hunter orchestrator.py job_scout.py job_tracker.py pdf_generator.py hunt.py run_batch.py salary_lookup.py candidate_config.example.json .gitignore README.md SETUP.md ./
+COPY --chown=hunter:hunter assets ./assets
 COPY --chown=hunter:hunter tools ./tools
 COPY --chown=hunter:hunter tests ./tests
 COPY --chown=hunter:hunter .claude ./.claude
